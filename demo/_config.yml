@@ -18,3 +18,10 @@ parse:
   myst_enable_extensions:
     - dollarmath
     - colon_fence
+
+sphinx:
+  config:
+    nb_custom_formats:
+      .py:
+        - jupytext.reads
+        - fmt: py:percent

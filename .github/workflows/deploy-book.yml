@@ -1,9 +1,5 @@
 name: deploy-book
 
-# Build the Jupyter Book in demo/ and publish it to GitHub Pages on every push to
-# main. Pages source must be set to "GitHub Actions" in the repository settings
-# (Settings -> Pages -> Build and deployment -> Source: GitHub Actions).
-
 on:
   push:
     branches: [main]
@@ -17,7 +13,6 @@ permissions:
   pages: write
   id-token: write
 
-# Allow one concurrent deployment; don't cancel an in-progress one.
 concurrency:
   group: pages
   cancel-in-progress: false
