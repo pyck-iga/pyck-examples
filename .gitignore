@@ -11,3 +11,6 @@ __pycache__/
 # Local-only tooling / editor config
 .claude/
 .vscode/
+
+plots/
+visualize/

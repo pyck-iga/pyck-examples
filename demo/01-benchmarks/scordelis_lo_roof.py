@@ -18,10 +18,6 @@
 # %% [markdown]
 # # Scordelis-Lo Roof Benchmark
 #
-# Convergence of isogeometric shell elements on the classic Scordelis-Lo roof. Two
-# studies, both on the **uniform** mesh: an **element comparison** (KL-3p, RM-Hier-4p,
-# RM-Hier-5p) per DOF, and a **polynomial refinement** of RM-Hier-4p at $p=3,4,5,6$.
-#
 # **References**
 #
 # 1. A. C. Scordelis and K. S. Lo, *"Computer analysis of cylindrical shells"*,
@@ -35,8 +31,6 @@
 #    $0.3006$ shear-rigid) and shows the long-quoted $0.3024$ to be spurious.
 
 # %%
-import csv
-
 import numpy as np
 import pyck as ck
 
@@ -62,7 +56,7 @@ import pyck as ck
 # The quarter sits in the natural textbook frame: $Z$ vertical, cylinder axis along
 # $Y$, the whole patch in $x\ge0,\,y\ge0$. Gravity acts in $-Z$.
 #
-# <img src="figures/scordelis/scordelis_lo_geom.svg" width="480" align="center" alt="Scordelis-Lo roof: quarter model in the textbook frame.">
+# <img src="../figures/scordelis/scordelis_lo_geom.svg" width="480" align="center" alt="Scordelis-Lo roof: quarter model in the textbook frame.">
 
 
 # %%
@@ -184,70 +178,33 @@ def solve_roof(n: int, deg: int, element_cls: type[ck.Element]):
 # %% [markdown]
 # ## Studies
 
-# %%
-def save_rows(rows, path):
-    """Write result rows to ``path`` as CSV (columns from the first row's keys)."""
-    with open(path, "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
-        writer.writeheader()
-        writer.writerows(rows)
-    print(f"Wrote {len(rows)} rows to {path}")
-
-
-def load_rows(path):
-    """Read result rows back from a CSV written by ``save_rows``."""
-    with open(path, newline="") as f:
-        return list(csv.DictReader(f))
-
 # %% [markdown]
 # ### Polynomial refinement
 #
 # RM-Hier-4p at $p=3,4,5,6$ on the **uniform** mesh, against control points per
 # direction $N$. Higher $p$ approaches the reference faster. Each degree starts 
 # at its coarsest single-element mesh ($N=\deg+1$).
-
 # %%
-def run_refinement_study():
-    """Sweep RM-Hier-4p at p=3,4,5,6 on the uniform mesh over control points per
-    direction N; print a table and return the result rows."""
-    n_sweep = (4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 20, 24, 32)
-    print(f"Study 1: polynomial refinement   (RM-Hier-4p, uniform, ref u* = {REFERENCE:.4f})")
-    rows = []
-    for deg in (3, 4, 5, 6):
-        print(f"\n######## p={deg} ########")
-        print(f"{'elems':>6} {'N':>4} {'ndof':>8} {'|w_A|':>12} {'err %':>9}")
-        for n in n_sweep:
-            if n - deg < 1:                  # >= 1 element/direction (min N = deg+1)
-                continue
-            try:
-                w, ndof = solve_roof(n, deg, ck.ShellReissnerMindlinHier4p)
-            except Exception as exc:         # rank-deficient on coarsest meshes
-                print(f"{n - deg:>6} {n:>4}   skipped ({type(exc).__name__})", flush=True)
-                continue
-            err = 100.0 * (abs(w) - REFERENCE) / REFERENCE
-            print(f"{n - deg:>6} {n:>4} {ndof:>8} {abs(w):>12.6f} {err:>8.3f}%", flush=True)
-            rows.append({
-                "mesh": "uniform", "element": "ShellReissnerMindlinHier4p", "n": n,
-                "deg": deg, "ndof": ndof, "w_signed": w, "w_abs": abs(w),
-                "reference": REFERENCE, "err_pct": err,
-            })
-    print()
-    return rows
-
-
-# %%
-RUN_STUDY = True   # compute & save the CSV; set False to just reload it
-POLY_CSV = "results_polynomial.csv"
-
-if RUN_STUDY:
-    poly_rows = run_refinement_study()
-    save_rows(poly_rows, POLY_CSV)
-else:
-    poly_rows = load_rows(POLY_CSV)
+n_sweep = (4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 20, 24, 32)
+print(f"Study 1: polynomial refinement   (RM-Hier-4p, uniform, ref u* = {REFERENCE:.4f})")
+for deg in (3, 4, 5, 6):
+    print(f"\n######## p={deg} ########")
+    print(f"{'elems':>6} {'N':>4} {'ndof':>8} {'|w_A|':>12} {'err %':>9}")
+    for n in n_sweep:
+        if n - deg < 1:                  # >= 1 element/direction (min N = deg+1)
+            continue
+        try:
+            w, ndof = solve_roof(n, deg, ck.ShellReissnerMindlinHier4p)
+        except Exception as exc:         # rank-deficient on coarsest meshes
+            print(f"{n - deg:>6} {n:>4}   skipped ({type(exc).__name__})", flush=True)
+            continue
+        err = 100.0 * (abs(w) - REFERENCE) / REFERENCE
+        print(f"{n - deg:>6} {n:>4} {ndof:>8} {abs(w):>12.6f} {err:>8.3f}%", flush=True)
+print()
 
 # %% [markdown]
 #
-# <img src="figures/scordelis/convergence_polynomial.svg" width="620" align="center" alt="RM-Hier-4p polynomial refinement: normalized deflection vs control points per direction.">
+# <img src="../figures/scordelis/convergence_polynomial.svg" width="620" align="center" alt="RM-Hier-4p polynomial refinement: normalized deflection vs control points per direction.">
 
 
 # %% [markdown]
@@ -262,58 +219,71 @@ else:
 #
 # | formulation | $N=8$ | $N=16$ | $N=24$ | $N=32$ | $N=48$ |
 # |:--|--:|--:|--:|--:|--:|
-# | KL-3p (shear-rigid) | 0.30045 | 0.30059 | 0.30059 | 0.30061 | 0.30059 |
+# | KL-3p (Kiendl) | 0.30045 | 0.30059 | 0.30059 | 0.30061 | 0.30059 |
 # | RM-Hier-4p | 0.30066 | 0.30108 | 0.30131 | 0.30150 | 0.30174 |
-# | RM-Hier-5p | 0.30076 | 0.30131 | 0.30159 | 0.30177 | 0.30194 |
+# | RM-Hier-5p (Echter) | 0.30076 | 0.30131 | 0.30159 | 0.30177 | 0.30194 |
 #
 # The shear-flexible RM elements converge up toward $u^\ast = 0.3020$; KL-3p plateaus at
 # the shear-rigid Kirchhoff-Love value $0.3006$.
 
 # %%
-def run_elem_comparison_study():
-    """Sweep KL-3p, RM-Hier-4p, RM-Hier-5p at p=3 on the uniform mesh over control
-    points per direction N; print a table and return the result rows."""
-    n_sweep = (5, 6, 7, 8, 9, 10, 12, 14, 16, 20, 24, 32, 40, 48)
-    deg = 3
-    elements = (
-        ("ShellReissnerMindlinHier4p", ck.ShellReissnerMindlinHier4p),
-        ("ShellReissnerMindlinHier5p", ck.ShellReissnerMindlinHier5p),
-        ("ShellKirchhoffLove3p",       ck.ShellKirchhoffLove3p),
-    )
-    print(f"Study 2: element comparison   (p={deg}, uniform, ref u* = {REFERENCE:.4f})")
-    rows = []
-    for ename, ecls in elements:
-        print(f"\n######## {ename} | p={deg} ########")
-        print(f"{'elems':>6} {'N':>4} {'ndof':>8} {'|w_A|':>12} {'err %':>9}")
-        for n in n_sweep:
-            if n - deg < 2:                  # >= 2 elements/direction
-                continue
-            try:
-                w, ndof = solve_roof(n, deg, ecls)
-            except Exception as exc:
-                print(f"{n - deg:>6} {n:>4}   skipped ({type(exc).__name__})", flush=True)
-                continue
-            err = 100.0 * (abs(w) - REFERENCE) / REFERENCE
-            print(f"{n - deg:>6} {n:>4} {ndof:>8} {abs(w):>12.6f} {err:>8.3f}%", flush=True)
-            rows.append({
-                "mesh": "uniform", "element": ename, "n": n, "deg": deg, "ndof": ndof,
-                "w_signed": w, "w_abs": abs(w), "reference": REFERENCE, "err_pct": err,
-            })
-    print()
-    return rows
-
-
-# %%
-RUN_STUDY = True   # compute & save the CSV; set False to just reload it
-ELEM_CSV = "results_element.csv"
-
-if RUN_STUDY:
-    elem_rows = run_elem_comparison_study()
-    save_rows(elem_rows, ELEM_CSV)
-else:
-    elem_rows = load_rows(ELEM_CSV)
+n_sweep = (5, 6, 7, 8, 9, 10, 12, 14, 16, 20, 24, 32, 40, 48)
+deg = 3
+elements = (
+    ("ShellReissnerMindlinHier4p", ck.ShellReissnerMindlinHier4p),
+    ("ShellReissnerMindlinHier5p", ck.ShellReissnerMindlinHier5p),
+    ("ShellKirchhoffLove3p",       ck.ShellKirchhoffLove3p),
+)
+print(f"Study 2: element comparison   (p={deg}, uniform, ref u* = {REFERENCE:.4f})")
+for ename, ecls in elements:
+    print(f"\n######## {ename} | p={deg} ########")
+    print(f"{'elems':>6} {'N':>4} {'ndof':>8} {'|w_A|':>12} {'err %':>9}")
+    for n in n_sweep:
+        if n - deg < 2:                  # >= 2 elements/direction
+            continue
+        try:
+            w, ndof = solve_roof(n, deg, ecls)
+        except Exception as exc:
+            print(f"{n - deg:>6} {n:>4}   skipped ({type(exc).__name__})", flush=True)
+            continue
+        err = 100.0 * (abs(w) - REFERENCE) / REFERENCE
+        print(f"{n - deg:>6} {n:>4} {ndof:>8} {abs(w):>12.6f} {err:>8.3f}%", flush=True)
+print()
 
 # %% [markdown]
 #
-# <img src="figures/scordelis/convergence_element.svg" width="620" align="center" alt="Element comparison (KL-3p, RM-Hier-4p, RM-Hier-5p, p=3): normalized deflection vs DOFs.">
+# <img src="../figures/scordelis/convergence_element.svg" width="620" align="center" alt="Element comparison (KL-3p, RM-Hier-4p, RM-Hier-5p, p=3): normalized deflection vs DOFs.">
 
+# %% [markdown]
+# ## ParaView export
+#
+# Solve a single mesh and write the **displacement** plus the membrane forces
+# $n^{ab}$ and bending moments $m^{ab}$ to an exact rational-Bézier `.vtu`
+# (ParaView 5.9+). The resultants come straight from `FieldType.TRACTION`
+# (`n11,n22,n12`) and `FieldType.MOMENT` (`m11,m22,m12`) as contravariant curvilinear
+# components. Open it in ParaView, **warp by `displacement`**, and colour by e.g. `m11`.
+# (Transverse shear is omitted: the thin-shell constitutive shear is degenerate.)
+
+# %%
+n, deg = 12, 4
+patch = scordelis_quarter_roof(n, deg)
+element = ck.ShellReissnerMindlinHier4p(ck.PlaneStress2d(E, NU, T))
+prob = ck.LinearElasticProblem([patch], element, ck.GaussLegendre(deg + 1, dim=2))
+prob.add_domain_load(Q)
+gauss1 = ck.GaussLegendre(deg + 1, dim=1)
+crown_symmetry(prob, patch, gauss1)
+midspan_symmetry(prob, patch, gauss1)
+rigid_diaphragm(prob, patch, gauss1)
+u = ck.solve(prob)
+
+disp = ck.Function(u, element, patch, ck.FieldType.DISPLACEMENT)
+traction = ck.Function(u, element, patch, ck.FieldType.TRACTION)   # [n11, n22, n12, q1, q2]
+moment = ck.Function(u, element, patch, ck.FieldType.MOMENT)       # [m11, m22, m12]
+
+fields = {
+    "displacement": disp,
+    "n11": traction[0], "n22": traction[1], "n12": traction[2],
+    "m11": moment[0],   "m22": moment[1],   "m12": moment[2],
+}
+with ck.BezierVtuWriter("scordelis_lo_roof.vtu") as writer:
+    writer.add(patch, functions=fields)
