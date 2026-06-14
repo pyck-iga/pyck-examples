@@ -18,6 +18,7 @@ parse:
   myst_enable_extensions:
     - dollarmath
     - colon_fence
+    - html_image
 
 sphinx:
   config:

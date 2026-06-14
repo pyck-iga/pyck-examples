@@ -40,23 +40,6 @@ import csv
 import numpy as np
 import pyck as ck
 
-# Convergence figures are produced separately by ``plot.py`` from the CSVs below.
-
-
-def save_rows(rows, path):
-    """Write result rows to ``path`` as CSV (columns from the first row's keys)."""
-    with open(path, "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
-        writer.writeheader()
-        writer.writerows(rows)
-    print(f"Wrote {len(rows)} rows to {path}")
-
-
-def load_rows(path):
-    """Read result rows back from a CSV written by ``save_rows``."""
-    with open(path, newline="") as f:
-        return list(csv.DictReader(f))
-
 # %% [markdown]
 # ## Problem setup
 #
@@ -79,7 +62,8 @@ def load_rows(path):
 # The quarter sits in the natural textbook frame: $Z$ vertical, cylinder axis along
 # $Y$, the whole patch in $x\ge0,\,y\ge0$. Gravity acts in $-Z$.
 #
-# ![Scordelis-Lo roof: quarter model in the textbook frame.](figures/scordelis/scordelis_lo_geom.svg)
+# <img src="figures/scordelis/scordelis_lo_geom.svg" width="480" align="center" alt="Scordelis-Lo roof: quarter model in the textbook frame.">
+
 
 # %%
 R = 25.0
@@ -198,7 +182,25 @@ def solve_roof(n: int, deg: int, element_cls: type[ck.Element]):
     return disp_A @ np.array([0.0, 0.0, 1.0]), ndof
 
 # %% [markdown]
-# ## Study 1 — Polynomial refinement
+# ## Studies
+
+# %%
+def save_rows(rows, path):
+    """Write result rows to ``path`` as CSV (columns from the first row's keys)."""
+    with open(path, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+        writer.writeheader()
+        writer.writerows(rows)
+    print(f"Wrote {len(rows)} rows to {path}")
+
+
+def load_rows(path):
+    """Read result rows back from a CSV written by ``save_rows``."""
+    with open(path, newline="") as f:
+        return list(csv.DictReader(f))
+
+# %% [markdown]
+# ### Polynomial refinement
 #
 # RM-Hier-4p at $p=3,4,5,6$ on the **uniform** mesh, against control points per
 # direction $N$. Higher $p$ approaches the reference faster. Each degree starts 
@@ -244,12 +246,12 @@ else:
     poly_rows = load_rows(POLY_CSV)
 
 # %% [markdown]
-# The figure is produced from this CSV by `plot.plot_polynomial_refinement`:
 #
-# ![RM-Hier-4p polynomial refinement: normalized deflection vs control points per direction.](figures/scordelis/convergence_polynomial.svg)
+# <img src="figures/scordelis/convergence_polynomial.svg" width="620" align="center" alt="RM-Hier-4p polynomial refinement: normalized deflection vs control points per direction.">
+
 
 # %% [markdown]
-# ## Study 2 — Element comparison
+# ### Element comparison
 #
 # KL-3p, RM-Hier-4p and RM-Hier-5p at $p=3$ on the **uniform** mesh, comparing the
 # **normalized** deflection $|u_\text{ref}|/u^\ast$ per total DOF. The shear-flexible
@@ -312,6 +314,6 @@ else:
     elem_rows = load_rows(ELEM_CSV)
 
 # %% [markdown]
-# The figure is produced from this CSV by `plot.plot_element_comparison`:
 #
-# ![Element comparison (KL-3p, RM-Hier-4p, RM-Hier-5p, p=3): normalized deflection vs DOFs.](figures/scordelis/convergence_element.svg)
+# <img src="figures/scordelis/convergence_element.svg" width="620" align="center" alt="Element comparison (KL-3p, RM-Hier-4p, RM-Hier-5p, p=3): normalized deflection vs DOFs.">
+
