@@ -1,0 +1,20 @@
+title: pyck shell benchmarks
+author: pyck-iga
+only_build_toc_files: true
+
+execute:
+  execute_notebooks: "off"
+
+repository:
+  url: https://github.com/pyck-iga/pyck-examples
+  path_to_book: demo
+  branch: main
+
+html:
+  use_repository_button: true
+  use_issues_button: true
+
+parse:
+  myst_enable_extensions:
+    - dollarmath
+    - colon_fence

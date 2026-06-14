@@ -1,0 +1,13 @@
+# Jupyter Book build output
+demo/_build/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local-only tooling / editor config
+.claude/
+.vscode/
