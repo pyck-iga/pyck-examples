@@ -7,7 +7,7 @@ execute:
 
 repository:
   url: https://github.com/pyck-iga/pyck-examples
-  path_to_book: demo
+  path_to_book: .
   branch: main
 
 html:

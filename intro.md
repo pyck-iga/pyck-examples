@@ -5,7 +5,7 @@ As part of my Honors Project for [BGCE](https://www.bgce.de/), I've been develop
 prototyping and testing shell formulations. This Jupyter Book is a collection of runnable example notebooks that put it to work and validate it against
 classic benchmarks.
 
-## Benchmarks
+## Shell Benchmarks
 
 Classic single-patch shell problems, validated against published references.
 

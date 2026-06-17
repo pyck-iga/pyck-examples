@@ -4,7 +4,11 @@ on:
   push:
     branches: [main]
     paths:
-      - demo/**
+      - shell-benchmarks/**
+      - _config.yml
+      - _toc.yml
+      - intro.md
+      - requirements.txt
       - .github/workflows/deploy-book.yml
   workflow_dispatch:
 
@@ -27,12 +31,12 @@ jobs:
           python-version: "3.12"
           cache: pip
       - name: Install build dependencies
-        run: pip install -r demo/requirements.txt
+        run: pip install -r requirements.txt
       - name: Build the book
-        run: jupyter-book build demo/
+        run: jupyter-book build .
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: demo/_build/html
+          path: _build/html
 
   deploy:
     needs: build

@@ -1,5 +1,9 @@
 # Jupyter Book build output
-demo/_build/
+_build/
+
+# Regenerable artifacts written when the notebooks are run
+**/results*.csv
+**/*.vtu
 
 # Python caches
 __pycache__/

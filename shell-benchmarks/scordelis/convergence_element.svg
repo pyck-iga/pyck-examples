@@ -1,0 +1,1791 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="637.306363pt" height="438.760812pt" viewBox="0 0 637.306363 438.760812" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-06-17T10:00:28.068611</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.0, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 438.760812 
+L 637.306363 438.760812 
+L 637.306363 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 65.467373 385.056 
+L 476.155373 385.056 
+L 476.155373 7.2 
+L 65.467373 7.2 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 65.467373 22.695637 
+L 476.155373 22.695637 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 7.8,3.9; stroke-dashoffset: 0; stroke: #000000; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 65.467373 58.456087 
+L 476.155373 58.456087 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 7.8,3.9; stroke-dashoffset: 0; stroke: #000000; stroke-width: 1.3"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_3">
+      <path d="M 105.469809 385.056 
+L 105.469809 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_4">
+      <defs>
+       <path id="m18ce67af6c" d="M 0 0 
+L 0 3.5 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m18ce67af6c" x="105.469809" y="385.056" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <!-- $\mathdefault{10^{2}}$ -->
+      <g transform="translate(94.066716 406.132075) scale(0.17 -0.17)">
+       <defs>
+        <path id="Utopia-Regular-11" d="M 2796 0 
+L 2796 185 
+L 2259 230 
+C 2124 243 2048 294 2048 544 
+L 2048 4313 
+L 2016 4352 
+L 697 4128 
+L 697 3968 
+L 1292 3897 
+C 1401 3885 1446 3833 1446 3648 
+L 1446 544 
+C 1446 422 1427 345 1388 300 
+C 1356 256 1305 236 1235 230 
+L 697 185 
+L 697 0 
+L 2796 0 
+z
+" transform="scale(0.015625)"/>
+        <path id="Utopia-Regular-10" d="M 1696 4127 
+C 2304 4127 2476 3183 2476 2143 
+C 2476 1104 2304 160 1696 160 
+C 1088 160 915 1104 915 2143 
+C 915 3183 1088 4127 1696 4127 
+z
+M 1696 4352 
+C 640 4352 262 3419 262 2143 
+C 262 868 640 -64 1696 -64 
+C 2752 -64 3129 868 3129 2143 
+C 3129 3419 2752 4352 1696 4352 
+z
+" transform="scale(0.015625)"/>
+        <path id="Utopia-Regular-12" d="M 3104 844 
+L 2924 876 
+C 2790 531 2662 486 2406 486 
+L 768 486 
+C 870 819 1248 1273 1843 1702 
+C 2457 2150 2931 2438 2931 3155 
+C 2931 4045 2342 4352 1670 4352 
+C 793 4352 339 3821 339 3488 
+C 339 3270 582 3168 691 3168 
+C 806 3168 851 3232 876 3341 
+C 979 3776 1228 4127 1625 4127 
+C 2118 4127 2259 3712 2259 3244 
+C 2259 2560 1913 2176 1356 1683 
+C 569 998 294 563 172 64 
+L 236 0 
+L 2886 0 
+L 3104 844 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#Utopia-Regular-11" transform="scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-10" transform="translate(48.617672 0) scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-12" transform="translate(97.235343 36.164371) scale(0.696583)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_5">
+      <path d="M 276.231896 385.056 
+L 276.231896 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m18ce67af6c" x="276.231896" y="385.056" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <!-- $\mathdefault{10^{3}}$ -->
+      <g transform="translate(264.828804 406.132075) scale(0.17 -0.17)">
+       <defs>
+        <path id="Utopia-Regular-13" d="M 832 2355 
+C 832 2246 864 2176 947 2176 
+C 1024 2176 1196 2240 1504 2240 
+C 2048 2240 2355 1747 2355 1190 
+C 2355 428 1977 160 1523 160 
+C 1100 160 825 480 704 838 
+C 665 960 601 1017 512 1017 
+C 396 1017 172 896 172 665 
+C 172 390 614 -64 1516 -64 
+C 2444 -64 3027 403 3027 1222 
+C 3027 2080 2291 2336 1939 2368 
+L 1939 2393 
+C 2284 2451 2841 2705 2841 3334 
+C 2841 4039 2284 4352 1600 4352 
+C 755 4352 339 3867 339 3594 
+C 339 3397 563 3289 652 3289 
+C 736 3289 787 3334 812 3416 
+C 953 3848 1196 4127 1555 4127 
+C 2060 4127 2182 3683 2182 3327 
+C 2182 2946 2048 2470 1504 2470 
+C 1196 2470 1024 2533 947 2533 
+C 864 2533 832 2470 832 2355 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#Utopia-Regular-11" transform="scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-10" transform="translate(48.617672 0) scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-13" transform="translate(97.235343 36.164371) scale(0.696583)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_7">
+      <path d="M 446.993983 385.056 
+L 446.993983 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#m18ce67af6c" x="446.993983" y="385.056" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <!-- $\mathdefault{10^{4}}$ -->
+      <g transform="translate(435.590891 406.132075) scale(0.17 -0.17)">
+       <defs>
+        <path id="Utopia-Regular-14" d="M 1920 1152 
+L 1920 494 
+C 1920 275 1849 237 1696 224 
+L 1286 185 
+L 1286 0 
+L 2976 0 
+L 2976 185 
+L 2688 217 
+C 2540 237 2496 275 2496 494 
+L 2496 1152 
+L 3155 1152 
+L 3155 1452 
+L 2496 1452 
+L 2496 4288 
+L 2028 4288 
+C 1427 3402 710 2286 121 1286 
+L 179 1152 
+L 1920 1152 
+z
+M 582 1452 
+C 966 2151 1414 2889 1907 3665 
+L 1920 3665 
+L 1920 1452 
+L 582 1452 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#Utopia-Regular-11" transform="scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-10" transform="translate(48.617672 0) scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-14" transform="translate(97.235343 36.164371) scale(0.696583)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_9">
+      <path d="M 67.586453 385.056 
+L 67.586453 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_10">
+      <defs>
+       <path id="mc7f2d55781" d="M 0 0 
+L 0 2 
+" style="stroke: #000000; stroke-width: 0.6"/>
+      </defs>
+      <g>
+       <use xlink:href="#mc7f2d55781" x="67.586453" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_11">
+      <path d="M 79.018427 385.056 
+L 79.018427 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#mc7f2d55781" x="79.018427" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_13">
+      <path d="M 88.921253 385.056 
+L 88.921253 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#mc7f2d55781" x="88.921253" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_15">
+      <path d="M 97.656164 385.056 
+L 97.656164 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#mc7f2d55781" x="97.656164" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_17">
+      <path d="M 156.874319 385.056 
+L 156.874319 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_18">
+      <g>
+       <use xlink:href="#mc7f2d55781" x="156.874319" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_9">
+     <g id="line2d_19">
+      <path d="M 186.94403 385.056 
+L 186.94403 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_20">
+      <g>
+       <use xlink:href="#mc7f2d55781" x="186.94403" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_10">
+     <g id="line2d_21">
+      <path d="M 208.27883 385.056 
+L 208.27883 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_22">
+      <g>
+       <use xlink:href="#mc7f2d55781" x="208.27883" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_11">
+     <g id="line2d_23">
+      <path d="M 224.827386 385.056 
+L 224.827386 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_24">
+      <g>
+       <use xlink:href="#mc7f2d55781" x="224.827386" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_12">
+     <g id="line2d_25">
+      <path d="M 238.348541 385.056 
+L 238.348541 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_26">
+      <g>
+       <use xlink:href="#mc7f2d55781" x="238.348541" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_13">
+     <g id="line2d_27">
+      <path d="M 249.780514 385.056 
+L 249.780514 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_28">
+      <g>
+       <use xlink:href="#mc7f2d55781" x="249.780514" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_14">
+     <g id="line2d_29">
+      <path d="M 259.68334 385.056 
+L 259.68334 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_30">
+      <g>
+       <use xlink:href="#mc7f2d55781" x="259.68334" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_15">
+     <g id="line2d_31">
+      <path d="M 268.418252 385.056 
+L 268.418252 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_32">
+      <g>
+       <use xlink:href="#mc7f2d55781" x="268.418252" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_16">
+     <g id="line2d_33">
+      <path d="M 327.636406 385.056 
+L 327.636406 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_34">
+      <g>
+       <use xlink:href="#mc7f2d55781" x="327.636406" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_17">
+     <g id="line2d_35">
+      <path d="M 357.706117 385.056 
+L 357.706117 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_36">
+      <g>
+       <use xlink:href="#mc7f2d55781" x="357.706117" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_18">
+     <g id="line2d_37">
+      <path d="M 379.040917 385.056 
+L 379.040917 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_38">
+      <g>
+       <use xlink:href="#mc7f2d55781" x="379.040917" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_19">
+     <g id="line2d_39">
+      <path d="M 395.589473 385.056 
+L 395.589473 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_40">
+      <g>
+       <use xlink:href="#mc7f2d55781" x="395.589473" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_20">
+     <g id="line2d_41">
+      <path d="M 409.110628 385.056 
+L 409.110628 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_42">
+      <g>
+       <use xlink:href="#mc7f2d55781" x="409.110628" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_21">
+     <g id="line2d_43">
+      <path d="M 420.542601 385.056 
+L 420.542601 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_44">
+      <g>
+       <use xlink:href="#mc7f2d55781" x="420.542601" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_22">
+     <g id="line2d_45">
+      <path d="M 430.445427 385.056 
+L 430.445427 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_46">
+      <g>
+       <use xlink:href="#mc7f2d55781" x="430.445427" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_23">
+     <g id="line2d_47">
+      <path d="M 439.180339 385.056 
+L 439.180339 7.2 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_48">
+      <g>
+       <use xlink:href="#mc7f2d55781" x="439.180339" y="385.056" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="text_4">
+     <!-- degrees of freedom  $N_{\mathrm{dof}}$ -->
+     <g transform="translate(171.896423 427.280476) scale(0.2 -0.2)">
+      <defs>
+       <path id="Utopia-Regular-44" d="M 3731 0 
+L 3731 185 
+C 3277 217 3251 230 3251 555 
+L 3251 4697 
+L 3206 4736 
+L 2201 4576 
+L 2201 4416 
+L 2444 4390 
+C 2611 4371 2649 4339 2649 4096 
+L 2649 3046 
+C 2470 3142 2233 3200 1939 3200 
+C 1414 3200 1024 3033 755 2759 
+C 480 2472 313 2052 313 1498 
+C 313 566 806 -64 1651 -64 
+C 1996 -64 2297 89 2643 370 
+L 2643 44 
+L 2694 0 
+L 3731 0 
+z
+M 2649 1083 
+C 2649 953 2643 845 2604 738 
+C 2476 408 2195 281 1862 281 
+C 1273 281 979 852 979 1581 
+C 979 2405 1280 2975 1932 2975 
+C 2233 2975 2476 2836 2592 2576 
+C 2643 2468 2649 2380 2649 2208 
+L 2649 1083 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-45" d="M 2822 1676 
+C 2956 1676 3078 1708 3078 1920 
+C 3078 2295 2956 3200 1785 3200 
+C 787 3200 313 2492 313 1537 
+C 313 540 748 -77 1792 -64 
+C 2502 -58 2867 331 3040 830 
+L 2848 931 
+C 2668 565 2425 262 1920 262 
+C 1126 262 966 1020 979 1676 
+L 2822 1676 
+z
+M 985 1920 
+C 985 2180 1081 2975 1747 2975 
+C 2342 2975 2412 2371 2412 2123 
+C 2412 2002 2374 1920 2195 1920 
+L 985 1920 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-47" d="M 1664 2975 
+C 1977 2975 2304 2746 2304 2128 
+C 2304 1592 2022 1312 1651 1312 
+C 1292 1312 992 1592 992 2128 
+C 992 2759 1324 2975 1664 2975 
+z
+M 1798 -1312 
+C 1254 -1312 876 -1030 876 -567 
+C 876 -348 940 -187 1075 -84 
+C 1216 25 1427 64 1734 64 
+C 2297 64 2713 -72 2713 -554 
+C 2713 -1068 2252 -1312 1798 -1312 
+z
+M 2489 3001 
+C 2310 3123 1958 3200 1664 3200 
+C 684 3200 339 2599 339 2128 
+C 339 1528 736 1254 1030 1177 
+L 1030 1164 
+C 684 1033 441 855 441 617 
+C 441 396 697 153 1004 121 
+L 1004 108 
+C 729 18 268 -136 268 -599 
+C 268 -1248 908 -1536 1651 -1536 
+C 2035 -1536 2438 -1460 2745 -1274 
+C 3040 -1094 3251 -792 3251 -393 
+C 3251 300 2700 544 2016 544 
+L 1504 544 
+C 1043 544 972 690 972 806 
+C 972 984 1216 1081 1299 1107 
+C 1420 1094 1555 1088 1625 1088 
+C 2233 1088 2918 1356 2918 2128 
+C 2918 2395 2835 2618 2726 2727 
+L 3232 2803 
+L 3360 3206 
+L 3309 3264 
+L 2489 3001 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-52" d="M 1209 3200 
+L 236 3039 
+L 236 2879 
+L 480 2847 
+C 646 2822 684 2790 684 2559 
+L 684 554 
+C 684 230 652 217 204 185 
+L 204 0 
+L 1894 0 
+L 1894 185 
+C 1324 217 1286 230 1286 554 
+L 1286 2044 
+C 1286 2535 1504 2700 1651 2700 
+C 1753 2700 1862 2662 2048 2560 
+C 2092 2534 2144 2527 2176 2527 
+C 2329 2527 2470 2687 2470 2886 
+C 2470 3027 2380 3200 2131 3200 
+C 1900 3200 1708 3059 1286 2687 
+L 1209 3200 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-53" d="M 2348 2240 
+L 2348 2982 
+C 2137 3135 1811 3200 1523 3200 
+C 832 3200 364 2874 358 2271 
+C 364 1745 793 1510 1324 1352 
+C 1612 1263 2016 1117 2016 686 
+C 2016 362 1760 160 1420 160 
+C 902 160 614 534 486 1073 
+L 300 1073 
+L 364 242 
+C 595 38 985 -64 1363 -64 
+C 2124 -64 2560 337 2560 876 
+C 2560 1434 2214 1688 1555 1891 
+C 1292 1973 870 2106 870 2462 
+C 876 2791 1126 2975 1446 2975 
+C 1900 2975 2118 2626 2163 2240 
+L 2348 2240 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-4f" d="M 1843 3200 
+C 819 3200 313 2595 313 1567 
+C 313 540 819 -64 1843 -64 
+C 2880 -64 3379 540 3379 1567 
+C 3379 2595 2880 3200 1843 3200 
+z
+M 979 1567 
+C 979 2443 1260 2975 1843 2975 
+C 2438 2975 2713 2443 2713 1567 
+C 2713 692 2438 160 1843 160 
+C 1260 160 979 692 979 1567 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-46" d="M 1286 2879 
+L 2067 2879 
+L 2067 3136 
+L 1286 3136 
+L 1260 3846 
+C 1241 4448 1465 4511 1568 4511 
+C 1702 4511 1843 4448 2003 4080 
+C 2035 4017 2080 3972 2176 3972 
+C 2304 3972 2489 4080 2489 4271 
+C 2489 4480 2220 4736 1708 4736 
+C 1356 4736 1056 4575 896 4334 
+C 748 4112 684 3776 684 3357 
+L 684 3136 
+L 192 3136 
+L 192 2879 
+L 684 2879 
+L 684 556 
+C 684 230 665 217 204 185 
+L 204 0 
+L 1894 0 
+L 1894 185 
+C 1312 211 1286 224 1286 550 
+L 1286 2879 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-4d" d="M 236 3039 
+L 236 2879 
+L 480 2847 
+C 646 2822 684 2790 684 2561 
+L 684 555 
+C 684 230 665 217 204 185 
+L 204 0 
+L 1766 0 
+L 1766 185 
+C 1312 217 1286 230 1286 555 
+L 1286 2045 
+C 1286 2204 1292 2293 1337 2382 
+C 1459 2637 1740 2854 2092 2854 
+C 2643 2854 2707 2453 2707 2058 
+L 2707 555 
+C 2707 230 2688 217 2227 185 
+L 2227 0 
+L 3789 0 
+L 3789 185 
+C 3334 217 3309 230 3309 555 
+L 3309 2045 
+C 3309 2204 3315 2293 3353 2395 
+C 3449 2650 3725 2854 4083 2854 
+C 4486 2867 4729 2612 4729 2058 
+L 4729 555 
+C 4729 230 4710 217 4249 185 
+L 4249 0 
+L 5811 0 
+L 5811 185 
+C 5357 217 5331 230 5331 555 
+L 5331 2185 
+C 5331 2828 4985 3200 4377 3200 
+C 3853 3200 3475 2847 3251 2707 
+C 3097 3007 2854 3200 2406 3200 
+C 1913 3200 1510 2879 1286 2714 
+L 1228 3200 
+L 236 3039 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Italic-2e" d="M 1158 4416 
+L 1113 4230 
+L 1491 4192 
+C 1638 4179 1683 4096 1632 3885 
+L 1030 1270 
+C 953 932 883 689 806 479 
+C 729 274 620 223 428 204 
+L 230 185 
+L 198 0 
+L 1708 0 
+L 1740 185 
+L 1491 204 
+C 1286 223 1177 281 1196 479 
+C 1216 689 1254 932 1331 1270 
+L 1932 3885 
+L 1952 3885 
+C 2553 2590 3142 1295 3731 0 
+L 4147 0 
+L 4864 3145 
+C 4941 3484 5011 3726 5088 3937 
+C 5165 4141 5273 4192 5465 4211 
+L 5664 4230 
+L 5696 4416 
+L 4185 4416 
+L 4153 4230 
+L 4403 4204 
+C 4608 4179 4717 4147 4697 3937 
+C 4678 3726 4640 3484 4563 3145 
+L 4038 836 
+L 4013 836 
+C 3462 2029 2912 3222 2374 4416 
+L 1158 4416 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#Utopia-Regular-44" transform="scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-45" transform="translate(54.794536 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-47" transform="translate(101.917781 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-52" transform="translate(149.539158 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-45" transform="translate(183.412134 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-45" transform="translate(230.535379 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-53" transform="translate(277.658625 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-4f" transform="translate(338.231434 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-46" transform="translate(391.133059 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-46" transform="translate(440.946244 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-52" transform="translate(470.136798 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-45" transform="translate(504.009774 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-45" transform="translate(551.133019 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-44" transform="translate(598.256264 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-4f" transform="translate(653.0508 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-4d" transform="translate(705.952425 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Italic-2e" transform="translate(813.150439 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-44" transform="translate(885.080606 -16.872382) scale(0.696583)"/>
+      <use xlink:href="#Utopia-Regular-4f" transform="translate(926.724141 -16.872382) scale(0.696583)"/>
+      <use xlink:href="#Utopia-Regular-46" transform="translate(966.929085 -16.872382) scale(0.696583)"/>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_49">
+      <path d="M 65.467373 331.25723 
+L 476.155373 331.25723 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_50">
+      <defs>
+       <path id="m8e52a4d128" d="M 0 0 
+L -3.5 0 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m8e52a4d128" x="65.467373" y="331.25723" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <!-- $\mathdefault{0.96}$ -->
+      <g transform="translate(29.546666 336.999027) scale(0.17 -0.17)">
+       <defs>
+        <path id="Utopia-Regular-e" d="M 851 -64 
+C 1100 -64 1248 108 1254 339 
+C 1254 576 1100 755 851 755 
+C 608 755 448 576 448 339 
+C 448 108 608 -64 851 -64 
+z
+" transform="scale(0.015625)"/>
+        <path id="Utopia-Regular-19" d="M 1465 1728 
+C 1862 1728 2195 1952 2412 2264 
+L 2425 2264 
+C 2425 1862 2393 1344 2278 902 
+C 2163 480 1939 160 1529 160 
+C 1094 160 934 499 838 800 
+C 812 883 768 934 659 934 
+C 537 934 358 806 358 608 
+C 358 326 697 -64 1472 -64 
+C 1990 -64 2387 128 2630 467 
+C 2892 832 3052 1395 3052 2321 
+C 3052 3110 2892 3625 2643 3924 
+C 2400 4211 2048 4352 1638 4352 
+C 819 4352 230 3809 230 2932 
+C 230 2137 806 1728 1465 1728 
+z
+M 1657 2067 
+C 1158 2067 870 2499 870 3110 
+C 870 3695 1132 4127 1632 4127 
+C 2144 4127 2393 3523 2393 2906 
+C 2393 2798 2387 2671 2348 2569 
+C 2246 2270 1996 2067 1657 2067 
+z
+" transform="scale(0.015625)"/>
+        <path id="Utopia-Regular-16" d="M 1740 -64 
+C 2688 -64 3193 508 3193 1371 
+C 3193 2228 2636 2707 1971 2694 
+C 1484 2707 1100 2355 928 2145 
+L 915 2145 
+C 921 3555 1324 4127 1900 4127 
+C 2195 4127 2400 3877 2496 3510 
+C 2515 3433 2566 3375 2662 3375 
+C 2803 3375 3001 3485 3001 3665 
+C 3001 3922 2688 4352 1920 4352 
+C 1414 4352 1056 4159 787 3851 
+C 499 3517 281 2900 281 1974 
+C 281 604 780 -64 1740 -64 
+z
+M 1753 2368 
+C 2156 2368 2553 2006 2553 1276 
+C 2553 610 2291 160 1753 160 
+C 1196 160 928 750 928 1511 
+C 928 1898 1216 2368 1753 2368 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#Utopia-Regular-10" transform="scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-e" transform="translate(48.617672 0) scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-19" transform="translate(72.926553 0) scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-16" transform="translate(121.544224 0) scale(0.916563)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_51">
+      <path d="M 65.467373 254.116832 
+L 476.155373 254.116832 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_52">
+      <g>
+       <use xlink:href="#m8e52a4d128" x="65.467373" y="254.116832" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <!-- $\mathdefault{0.97}$ -->
+      <g transform="translate(29.546666 259.858629) scale(0.17 -0.17)">
+       <defs>
+        <path id="Utopia-Regular-17" d="M 460 4288 
+L 262 3392 
+L 435 3392 
+L 499 3526 
+C 582 3705 665 3801 953 3801 
+L 2681 3801 
+C 2617 3571 2502 3200 1984 2457 
+C 1433 1670 1068 953 1068 198 
+C 1068 -13 1216 -64 1414 -64 
+C 1600 -64 1734 -7 1728 179 
+C 1696 1024 1868 1702 2208 2297 
+C 2617 3014 2956 3411 3180 4217 
+L 3123 4288 
+L 460 4288 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#Utopia-Regular-10" transform="scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-e" transform="translate(48.617672 0) scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-19" transform="translate(72.926553 0) scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-17" transform="translate(121.544224 0) scale(0.916563)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_53">
+      <path d="M 65.467373 176.976434 
+L 476.155373 176.976434 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_54">
+      <g>
+       <use xlink:href="#m8e52a4d128" x="65.467373" y="176.976434" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <!-- $\mathdefault{0.98}$ -->
+      <g transform="translate(29.546666 182.718231) scale(0.17 -0.17)">
+       <defs>
+        <path id="Utopia-Regular-18" d="M 1696 2176 
+C 2208 2176 2483 1740 2483 1158 
+C 2483 595 2240 160 1696 160 
+C 1164 160 908 595 908 1158 
+C 908 1740 1190 2176 1696 2176 
+z
+M 1696 -64 
+C 2732 -64 3123 531 3123 1177 
+C 3123 1830 2713 2201 2278 2304 
+L 2278 2323 
+C 2668 2425 2982 2749 2982 3270 
+C 2982 3962 2438 4352 1696 4352 
+C 966 4352 409 3956 409 3270 
+C 409 2749 729 2425 1113 2323 
+L 1113 2304 
+C 684 2201 268 1830 268 1177 
+C 268 531 652 -64 1696 -64 
+z
+M 1696 2406 
+C 1235 2406 1030 2851 1030 3283 
+C 1030 3772 1260 4127 1696 4127 
+C 2131 4127 2348 3772 2361 3283 
+C 2361 2851 2163 2406 1696 2406 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#Utopia-Regular-10" transform="scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-e" transform="translate(48.617672 0) scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-19" transform="translate(72.926553 0) scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-18" transform="translate(121.544224 0) scale(0.916563)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_55">
+      <path d="M 65.467373 99.836035 
+L 476.155373 99.836035 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_56">
+      <g>
+       <use xlink:href="#m8e52a4d128" x="65.467373" y="99.836035" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <!-- $\mathdefault{0.99}$ -->
+      <g transform="translate(29.546666 105.577832) scale(0.17 -0.17)">
+       <use xlink:href="#Utopia-Regular-10" transform="scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-e" transform="translate(48.617672 0) scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-19" transform="translate(72.926553 0) scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-19" transform="translate(121.544224 0) scale(0.916563)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_57">
+      <path d="M 65.467373 22.695637 
+L 476.155373 22.695637 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke-dasharray: 2.775,1.2; stroke-dashoffset: 0; stroke: #b0b0b0; stroke-opacity: 0.4; stroke-width: 0.75"/>
+     </g>
+     <g id="line2d_58">
+      <g>
+       <use xlink:href="#m8e52a4d128" x="65.467373" y="22.695637" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <!-- $\mathdefault{1.00}$ -->
+      <g transform="translate(29.546666 28.437434) scale(0.17 -0.17)">
+       <use xlink:href="#Utopia-Regular-11" transform="scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-e" transform="translate(48.617672 0) scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-10" transform="translate(72.926553 0) scale(0.916563)"/>
+       <use xlink:href="#Utopia-Regular-10" transform="translate(121.544224 0) scale(0.916563)"/>
+      </g>
+     </g>
+    </g>
+    <g id="text_10">
+     <!-- normalized deflection  $|u_{\mathrm{ref}}| / u^{\ast}$ -->
+     <g transform="translate(21.266331 324.173145) rotate(-90) scale(0.2 -0.2)">
+      <defs>
+       <path id="Utopia-Regular-4e" d="M 3385 2185 
+C 3385 2828 3033 3200 2444 3200 
+C 1971 3200 1676 2969 1280 2714 
+L 1190 3200 
+L 236 3039 
+L 236 2879 
+L 480 2847 
+C 646 2822 684 2790 684 2561 
+L 684 555 
+C 684 230 665 217 204 185 
+L 204 0 
+L 1766 0 
+L 1766 185 
+C 1312 217 1286 230 1286 555 
+L 1286 2045 
+C 1286 2204 1299 2293 1350 2395 
+C 1484 2644 1772 2854 2112 2854 
+C 2547 2854 2784 2612 2784 2058 
+L 2784 555 
+C 2784 230 2764 217 2304 185 
+L 2304 0 
+L 3865 0 
+L 3865 185 
+C 3411 217 3385 230 3385 555 
+L 3385 2185 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-41" d="M 2195 921 
+C 2195 408 1798 275 1548 275 
+C 1152 275 960 554 960 928 
+C 960 1226 1100 1378 1459 1511 
+C 1715 1606 2054 1727 2195 1815 
+L 2195 921 
+z
+M 2771 2354 
+C 2771 2722 2688 3200 1721 3200 
+C 998 3200 428 2823 428 2475 
+C 428 2272 665 2177 787 2177 
+C 921 2177 960 2246 992 2354 
+C 1132 2823 1395 2975 1651 2975 
+C 1900 2975 2195 2849 2195 2342 
+L 2195 2075 
+C 2035 1910 1414 1752 908 1593 
+C 448 1454 313 1137 313 839 
+C 313 363 633 -64 1235 -64 
+C 1632 -52 1984 185 2188 319 
+C 2278 83 2380 -64 2604 -64 
+C 2841 -64 3116 6 3360 128 
+L 3321 281 
+C 3232 262 3091 249 2995 275 
+C 2880 300 2771 421 2771 820 
+L 2771 2354 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-4c" d="M 1209 4697 
+L 1164 4736 
+L 160 4576 
+L 160 4416 
+L 403 4391 
+C 569 4372 608 4340 608 4097 
+L 608 555 
+C 608 230 588 217 128 185 
+L 128 0 
+L 1689 0 
+L 1689 185 
+C 1235 217 1209 230 1209 555 
+L 1209 4697 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-49" d="M 236 3040 
+L 236 2881 
+L 480 2849 
+C 646 2824 684 2792 684 2562 
+L 684 555 
+C 684 230 665 217 204 185 
+L 204 0 
+L 1766 0 
+L 1766 185 
+C 1312 217 1286 230 1286 555 
+L 1286 3200 
+L 1241 3235 
+L 236 3040 
+z
+M 979 4556 
+C 748 4556 588 4390 588 4160 
+C 588 3936 748 3776 979 3776 
+C 1216 3776 1363 3936 1369 4160 
+C 1369 4390 1216 4556 979 4556 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-5a" d="M 2848 3136 
+L 390 3136 
+L 390 2188 
+L 588 2188 
+C 672 2777 806 2911 1497 2911 
+L 2137 2911 
+C 1478 1971 806 1036 121 96 
+L 172 0 
+L 2892 0 
+L 2956 979 
+L 2758 979 
+C 2656 377 2438 224 1728 224 
+L 902 224 
+C 1548 1164 2220 2105 2899 3046 
+L 2848 3136 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-6d" d="M 684 2879 
+L 684 556 
+C 684 230 665 217 204 185 
+L 204 0 
+L 1894 0 
+L 1894 185 
+C 1312 211 1286 224 1286 550 
+L 1286 2879 
+L 2067 2879 
+L 2067 3136 
+L 1286 3136 
+L 1286 3345 
+C 1286 4334 1664 4511 2048 4511 
+C 2342 4511 2630 4353 2726 4023 
+L 2726 556 
+C 2726 230 2707 217 2246 185 
+L 2246 0 
+L 3808 0 
+L 3808 185 
+C 3353 217 3328 230 3328 556 
+L 3328 4697 
+L 3283 4736 
+L 2880 4556 
+C 2700 4659 2425 4736 2080 4736 
+C 1625 4736 1267 4588 1030 4340 
+C 806 4112 684 3763 684 3269 
+L 684 3136 
+L 192 3136 
+L 192 2879 
+L 684 2879 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-43" d="M 1920 268 
+C 1158 268 979 1054 979 1650 
+C 979 2595 1356 2975 1798 2975 
+C 2092 2975 2278 2766 2406 2424 
+C 2444 2322 2483 2259 2604 2259 
+C 2732 2259 2982 2341 2982 2582 
+C 2982 2874 2560 3200 1868 3200 
+C 704 3200 313 2379 313 1536 
+C 313 478 838 -64 1798 -64 
+C 2246 -64 2848 172 3027 852 
+L 2841 940 
+C 2643 497 2387 268 1920 268 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-54" d="M 2086 2879 
+L 2086 3136 
+L 1260 3136 
+L 1260 3942 
+L 1075 3942 
+L 684 3136 
+L 198 3136 
+L 198 2879 
+L 659 2879 
+L 659 663 
+C 659 12 1145 -64 1369 -64 
+C 1696 -64 2003 102 2188 217 
+L 2137 351 
+C 1984 287 1843 268 1683 268 
+C 1465 268 1260 421 1260 905 
+L 1260 2879 
+L 2086 2879 
+z
+" transform="scale(0.015625)"/>
+       <path id="Fourier-Math-Symbols-2f" d="M 704 4544 
+L 704 -896 
+L 1075 -896 
+L 1075 4544 
+L 704 4544 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Italic-55" d="M 3411 3123 
+C 3225 2476 3123 2140 2956 1753 
+C 2675 1112 2118 268 1587 268 
+C 1382 268 1331 459 1427 827 
+L 2041 3200 
+L 2009 3232 
+L 844 3049 
+L 806 2896 
+L 1203 2864 
+C 1356 2851 1350 2755 1299 2556 
+L 857 864 
+C 723 352 774 -64 1286 -64 
+C 1900 -64 2572 614 2956 1358 
+L 2969 1358 
+L 2758 627 
+C 2636 198 2713 -64 3052 -64 
+C 3513 -64 3897 377 4121 851 
+L 3968 948 
+C 3840 730 3558 268 3379 268 
+C 3244 268 3244 416 3296 614 
+L 3981 3200 
+L 3411 3123 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-f" d="M 1017 -128 
+L 2361 4544 
+L 1932 4544 
+L 588 -128 
+L 1017 -128 
+z
+" transform="scale(0.015625)"/>
+       <path id="Fourier-Math-Symbols-45" d="M 953 2144 
+C 1164 2011 1683 1884 1766 1839 
+C 1779 1826 1798 1820 1798 1788 
+C 1798 1763 1779 1750 1766 1744 
+C 1683 1699 1164 1572 947 1439 
+C 844 1388 800 1343 800 1280 
+C 800 1242 819 1191 857 1121 
+C 915 1019 960 975 1024 975 
+C 1068 975 1113 1000 1184 1038 
+C 1408 1159 1772 1540 1856 1585 
+C 1868 1591 1881 1598 1888 1598 
+C 1894 1598 1907 1598 1913 1591 
+C 1932 1579 1932 1560 1932 1547 
+C 1932 1445 1792 943 1792 683 
+C 1792 486 1836 448 2028 448 
+C 2195 448 2259 479 2259 625 
+L 2259 708 
+C 2259 969 2118 1445 2118 1540 
+C 2118 1560 2118 1579 2144 1591 
+C 2150 1598 2156 1598 2163 1598 
+C 2176 1598 2188 1591 2195 1585 
+C 2278 1540 2649 1159 2873 1026 
+C 2931 988 2988 975 3027 975 
+C 3084 975 3142 1019 3193 1121 
+C 3232 1191 3257 1242 3257 1280 
+C 3257 1343 3212 1388 3110 1439 
+C 2886 1572 2374 1699 2291 1744 
+C 2272 1750 2259 1763 2259 1788 
+C 2259 1820 2272 1826 2291 1839 
+C 2374 1884 2886 2011 3110 2144 
+C 3212 2201 3257 2246 3257 2309 
+C 3257 2347 3232 2392 3193 2462 
+C 3142 2564 3097 2614 3033 2614 
+C 2995 2614 2944 2589 2873 2544 
+C 2649 2424 2278 2042 2195 1998 
+C 2188 1992 2182 1979 2163 1979 
+C 2156 1979 2150 1979 2144 1992 
+C 2118 2004 2118 2017 2118 2042 
+C 2118 2131 2265 2646 2265 2894 
+C 2265 3085 2220 3136 2028 3136 
+C 1836 3136 1792 3085 1792 2894 
+C 1792 2646 1932 2131 1932 2042 
+C 1932 2017 1932 2004 1913 1992 
+C 1907 1979 1894 1979 1888 1979 
+C 1881 1979 1868 1979 1856 1992 
+C 1772 2042 1408 2417 1184 2544 
+C 1113 2583 1062 2608 1024 2608 
+C 960 2608 915 2564 857 2462 
+C 819 2392 800 2347 800 2303 
+C 800 2239 844 2195 953 2144 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#Utopia-Regular-4e" transform="scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-4f" transform="translate(56.687446 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-52" transform="translate(109.589071 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-4d" transform="translate(145.952677 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-41" transform="translate(230.535486 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-4c" transform="translate(278.455776 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-49" transform="translate(304.059758 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-5a" transform="translate(330.759591 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-45" transform="translate(374.196768 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-44" transform="translate(421.320013 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-44" transform="translate(496.737181 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-45" transform="translate(551.531716 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-6d" transform="translate(598.654961 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-45" transform="translate(654.545348 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-43" transform="translate(701.668593 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-54" transform="translate(747.098253 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-49" transform="translate(778.580187 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-4f" transform="translate(805.28002 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-4e" transform="translate(858.181645 0) scale(0.916563)"/>
+      <use xlink:href="#Fourier-Math-Symbols-2f" transform="translate(935.491723 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Italic-55" transform="translate(960.996027 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-52" transform="translate(1020.672235 -16.872382) scale(0.696583)"/>
+      <use xlink:href="#Utopia-Regular-45" transform="translate(1046.415511 -16.872382) scale(0.696583)"/>
+      <use xlink:href="#Utopia-Regular-46" transform="translate(1082.228904 -16.872382) scale(0.696583)"/>
+      <use xlink:href="#Fourier-Math-Symbols-2f" transform="translate(1104.911696 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-f" transform="translate(1130.416 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Italic-55" transform="translate(1172.558001 0) scale(0.916563)"/>
+      <use xlink:href="#Fourier-Math-Symbols-45" transform="translate(1234.226783 36.164371) scale(0.696583)"/>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_59">
+    <path d="M 84.13501 367.880727 
+L 111.177319 116.941078 
+L 134.041266 71.949526 
+L 153.846918 62.336491 
+L 171.316741 59.868179 
+L 186.94403 59.116714 
+L 213.98634 58.74753 
+L 236.850287 58.677522 
+L 256.655939 58.659048 
+L 289.753051 58.650619 
+L 316.795361 58.649074 
+L 359.464959 58.648532 
+L 392.562072 58.648533 
+L 419.604381 58.648566 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke: #006400; stroke-width: 1.1; stroke-linecap: square"/>
+    <defs>
+     <path id="m309a57fa68" d="M -2.5 2.5 
+L 2.5 2.5 
+L 2.5 -2.5 
+L -2.5 -2.5 
+z
+" style="stroke: #006400; stroke-width: 1.1; stroke-linejoin: miter"/>
+    </defs>
+    <g clip-path="url(#p0d7d95cc97)">
+     <use xlink:href="#m309a57fa68" x="84.13501" y="367.880727" style="fill-opacity: 0; stroke: #006400; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m309a57fa68" x="111.177319" y="116.941078" style="fill-opacity: 0; stroke: #006400; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m309a57fa68" x="134.041266" y="71.949526" style="fill-opacity: 0; stroke: #006400; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m309a57fa68" x="153.846918" y="62.336491" style="fill-opacity: 0; stroke: #006400; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m309a57fa68" x="171.316741" y="59.868179" style="fill-opacity: 0; stroke: #006400; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m309a57fa68" x="186.94403" y="59.116714" style="fill-opacity: 0; stroke: #006400; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m309a57fa68" x="213.98634" y="58.74753" style="fill-opacity: 0; stroke: #006400; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m309a57fa68" x="236.850287" y="58.677522" style="fill-opacity: 0; stroke: #006400; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m309a57fa68" x="256.655939" y="58.659048" style="fill-opacity: 0; stroke: #006400; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m309a57fa68" x="289.753051" y="58.650619" style="fill-opacity: 0; stroke: #006400; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m309a57fa68" x="316.795361" y="58.649074" style="fill-opacity: 0; stroke: #006400; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m309a57fa68" x="359.464959" y="58.648532" style="fill-opacity: 0; stroke: #006400; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m309a57fa68" x="392.562072" y="58.648533" style="fill-opacity: 0; stroke: #006400; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m309a57fa68" x="419.604381" y="58.648566" style="fill-opacity: 0; stroke: #006400; stroke-width: 1.1; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="line2d_60">
+    <path d="M 105.469809 365.187257 
+L 132.512119 113.395848 
+L 155.376066 67.544955 
+L 175.181718 57.028905 
+L 192.651541 53.650793 
+L 208.27883 51.98202 
+L 235.321139 49.806764 
+L 258.185086 47.979628 
+L 277.990738 46.264619 
+L 311.08785 43.073903 
+L 338.13016 40.200982 
+L 380.799759 35.427152 
+L 413.896871 31.847878 
+L 440.939181 29.239473 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke: #000000; stroke-width: 1.1; stroke-linecap: square"/>
+    <defs>
+     <path id="m44a1bbf123" d="M -2.5 2.5 
+L 2.5 2.5 
+L 2.5 -2.5 
+L -2.5 -2.5 
+z
+" style="stroke: #000000; stroke-width: 1.1; stroke-linejoin: miter"/>
+    </defs>
+    <g clip-path="url(#p0d7d95cc97)">
+     <use xlink:href="#m44a1bbf123" x="105.469809" y="365.187257" style="fill-opacity: 0; stroke: #000000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m44a1bbf123" x="132.512119" y="113.395848" style="fill-opacity: 0; stroke: #000000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m44a1bbf123" x="155.376066" y="67.544955" style="fill-opacity: 0; stroke: #000000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m44a1bbf123" x="175.181718" y="57.028905" style="fill-opacity: 0; stroke: #000000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m44a1bbf123" x="192.651541" y="53.650793" style="fill-opacity: 0; stroke: #000000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m44a1bbf123" x="208.27883" y="51.98202" style="fill-opacity: 0; stroke: #000000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m44a1bbf123" x="235.321139" y="49.806764" style="fill-opacity: 0; stroke: #000000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m44a1bbf123" x="258.185086" y="47.979628" style="fill-opacity: 0; stroke: #000000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m44a1bbf123" x="277.990738" y="46.264619" style="fill-opacity: 0; stroke: #000000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m44a1bbf123" x="311.08785" y="43.073903" style="fill-opacity: 0; stroke: #000000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m44a1bbf123" x="338.13016" y="40.200982" style="fill-opacity: 0; stroke: #000000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m44a1bbf123" x="380.799759" y="35.427152" style="fill-opacity: 0; stroke: #000000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m44a1bbf123" x="413.896871" y="31.847878" style="fill-opacity: 0; stroke: #000000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m44a1bbf123" x="440.939181" y="29.239473" style="fill-opacity: 0; stroke: #000000; stroke-width: 1.1; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="line2d_61">
+    <path d="M 122.018365 363.294257 
+L 149.060675 111.725517 
+L 171.924622 65.282134 
+L 191.730274 54.298499 
+L 209.200097 50.429937 
+L 224.827386 48.313528 
+L 251.869695 45.303265 
+L 274.733642 42.75739 
+L 294.539294 40.447261 
+L 327.636406 36.43759 
+L 354.678716 33.194125 
+L 397.348315 28.64238 
+L 430.445427 25.944265 
+L 457.487737 24.375273 
+" clip-path="url(#p0d7d95cc97)" style="fill: none; stroke: #8b0000; stroke-width: 1.1; stroke-linecap: square"/>
+    <defs>
+     <path id="m3f7aae6861" d="M -2.5 2.5 
+L 2.5 2.5 
+L 2.5 -2.5 
+L -2.5 -2.5 
+z
+" style="stroke: #8b0000; stroke-width: 1.1; stroke-linejoin: miter"/>
+    </defs>
+    <g clip-path="url(#p0d7d95cc97)">
+     <use xlink:href="#m3f7aae6861" x="122.018365" y="363.294257" style="fill-opacity: 0; stroke: #8b0000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m3f7aae6861" x="149.060675" y="111.725517" style="fill-opacity: 0; stroke: #8b0000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m3f7aae6861" x="171.924622" y="65.282134" style="fill-opacity: 0; stroke: #8b0000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m3f7aae6861" x="191.730274" y="54.298499" style="fill-opacity: 0; stroke: #8b0000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m3f7aae6861" x="209.200097" y="50.429937" style="fill-opacity: 0; stroke: #8b0000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m3f7aae6861" x="224.827386" y="48.313528" style="fill-opacity: 0; stroke: #8b0000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m3f7aae6861" x="251.869695" y="45.303265" style="fill-opacity: 0; stroke: #8b0000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m3f7aae6861" x="274.733642" y="42.75739" style="fill-opacity: 0; stroke: #8b0000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m3f7aae6861" x="294.539294" y="40.447261" style="fill-opacity: 0; stroke: #8b0000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m3f7aae6861" x="327.636406" y="36.43759" style="fill-opacity: 0; stroke: #8b0000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m3f7aae6861" x="354.678716" y="33.194125" style="fill-opacity: 0; stroke: #8b0000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m3f7aae6861" x="397.348315" y="28.64238" style="fill-opacity: 0; stroke: #8b0000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m3f7aae6861" x="430.445427" y="25.944265" style="fill-opacity: 0; stroke: #8b0000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     <use xlink:href="#m3f7aae6861" x="457.487737" y="24.375273" style="fill-opacity: 0; stroke: #8b0000; stroke-width: 1.1; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 65.467373 385.056 
+L 65.467373 7.2 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 476.155373 385.056 
+L 476.155373 7.2 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 65.467373 385.056 
+L 476.155373 385.056 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 65.467373 7.2 
+L 476.155373 7.2 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_11">
+    <!-- $0.3020$ -->
+    <g transform="translate(71.627693 33.503739) scale(0.16 -0.16)">
+     <use xlink:href="#Utopia-Regular-10" transform="scale(0.916563)"/>
+     <use xlink:href="#Utopia-Regular-e" transform="translate(48.617672 0) scale(0.916563)"/>
+     <use xlink:href="#Utopia-Regular-13" transform="translate(72.926553 0) scale(0.916563)"/>
+     <use xlink:href="#Utopia-Regular-10" transform="translate(121.544224 0) scale(0.916563)"/>
+     <use xlink:href="#Utopia-Regular-12" transform="translate(170.161896 0) scale(0.916563)"/>
+     <use xlink:href="#Utopia-Regular-10" transform="translate(218.779567 0) scale(0.916563)"/>
+    </g>
+   </g>
+   <g id="text_12">
+    <!-- $0.3006$ -->
+    <g transform="translate(71.627693 69.264189) scale(0.16 -0.16)">
+     <use xlink:href="#Utopia-Regular-10" transform="scale(0.916563)"/>
+     <use xlink:href="#Utopia-Regular-e" transform="translate(48.617672 0) scale(0.916563)"/>
+     <use xlink:href="#Utopia-Regular-13" transform="translate(72.926553 0) scale(0.916563)"/>
+     <use xlink:href="#Utopia-Regular-10" transform="translate(121.544224 0) scale(0.916563)"/>
+     <use xlink:href="#Utopia-Regular-10" transform="translate(170.161896 0) scale(0.916563)"/>
+     <use xlink:href="#Utopia-Regular-16" transform="translate(218.779567 0) scale(0.916563)"/>
+    </g>
+   </g>
+   <g id="legend_1">
+    <g id="patch_7">
+     <path d="M 495.569133 115.553721 
+L 626.906363 115.553721 
+Q 630.106363 115.553721 630.106363 112.353721 
+L 630.106363 18.4 
+Q 630.106363 15.2 626.906363 15.2 
+L 495.569133 15.2 
+Q 492.369133 15.2 492.369133 18.4 
+L 492.369133 112.353721 
+Q 492.369133 115.553721 495.569133 115.553721 
+z
+" style="fill: #ffffff; opacity: 0.8; stroke: #cccccc; stroke-linejoin: miter"/>
+    </g>
+    <g id="line2d_62">
+     <path d="M 498.769133 35.636416 
+L 514.769133 35.636416 
+L 530.769133 35.636416 
+" style="fill: none; stroke: #006400; stroke-width: 1.1; stroke-linecap: square"/>
+     <defs>
+      <path id="m45b5e8381e" d="M -3 3 
+L 3 3 
+L 3 -3 
+L -3 -3 
+z
+" style="stroke: #006400; stroke-width: 1.1; stroke-linejoin: miter"/>
+     </defs>
+     <g>
+      <use xlink:href="#m45b5e8381e" x="514.769133" y="35.636416" style="fill-opacity: 0; stroke: #006400; stroke-width: 1.1; stroke-linejoin: miter"/>
+     </g>
+    </g>
+    <g id="text_13">
+     <!-- KL-3p -->
+     <g transform="translate(543.569133 32.408102) scale(0.16 -0.16)">
+      <defs>
+       <path id="Utopia-Regular-2b" d="M 1433 3822 
+C 1433 4179 1452 4192 2009 4230 
+L 2009 4416 
+L 224 4416 
+L 224 4230 
+C 787 4192 800 4179 800 3822 
+L 800 593 
+C 800 236 787 223 224 185 
+L 224 0 
+L 2009 0 
+L 2009 185 
+C 1452 223 1433 236 1433 593 
+L 1433 2278 
+L 1446 2278 
+L 1452 2252 
+C 1817 1677 2259 1073 2758 507 
+C 3129 83 3469 -32 3865 -45 
+L 4269 -64 
+L 4269 89 
+C 4006 147 3801 327 3526 616 
+C 2956 1227 2419 1877 1984 2532 
+C 2406 3002 2899 3490 3289 3831 
+C 3622 4127 3750 4198 4294 4230 
+L 4294 4416 
+L 2739 4416 
+L 2739 4230 
+L 2982 4211 
+C 3116 4198 3129 4121 2988 3953 
+C 2617 3535 1894 2777 1433 2301 
+L 1433 3822 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-2c" d="M 1433 3822 
+C 1433 4179 1452 4192 2048 4230 
+L 2048 4416 
+L 224 4416 
+L 224 4230 
+C 787 4192 800 4179 800 3822 
+L 800 593 
+C 800 236 787 223 224 185 
+L 224 0 
+L 3545 0 
+L 3622 1142 
+L 3430 1142 
+C 3302 306 2950 224 2278 224 
+C 1958 224 1728 236 1593 287 
+C 1459 345 1433 453 1433 766 
+L 1433 3822 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-d" d="M 473 1856 
+L 473 1407 
+L 2041 1407 
+L 2041 1856 
+L 473 1856 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-50" d="M 1241 2049 
+C 1241 2207 1267 2296 1324 2410 
+C 1472 2702 1747 2854 2086 2854 
+C 2342 2854 2912 2689 2912 1599 
+C 2912 667 2617 160 1977 160 
+C 1644 160 1388 331 1286 622 
+C 1248 736 1241 863 1241 1009 
+L 1241 2049 
+z
+M 192 3039 
+L 192 2879 
+L 435 2848 
+C 601 2822 640 2791 640 2562 
+L 640 -912 
+C 640 -1242 608 -1255 160 -1287 
+L 160 -1472 
+L 1817 -1472 
+L 1817 -1287 
+C 1280 -1255 1241 -1242 1241 -912 
+L 1241 83 
+C 1376 6 1676 -64 1971 -64 
+C 2835 -64 3577 331 3577 1637 
+C 3577 2087 3494 3200 2329 3200 
+C 1862 3200 1491 2886 1241 2727 
+L 1158 3200 
+L 192 3039 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#Utopia-Regular-2b" transform="scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-2c" transform="translate(60.273927 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-d" transform="translate(112.378507 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-13" transform="translate(148.343644 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-50" transform="translate(196.961316 0) scale(0.916563)"/>
+     </g>
+     <!-- (Kiendl) -->
+     <g transform="translate(543.569133 46.640467) scale(0.16 -0.16)">
+      <defs>
+       <path id="Utopia-Regular-8" d="M 1120 1792 
+C 1120 3622 1676 4173 2080 4255 
+L 2080 4416 
+C 960 4371 672 2982 672 1792 
+C 672 601 960 -788 2080 -832 
+L 2080 -672 
+C 1708 -596 1120 -52 1120 1792 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-9" d="M 1120 1792 
+C 1120 -52 531 -596 160 -672 
+L 160 -832 
+C 1280 -788 1568 601 1568 1792 
+C 1568 2982 1280 4371 160 4416 
+L 160 4255 
+C 563 4173 1120 3622 1120 1792 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#Utopia-Regular-8" transform="scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-2b" transform="translate(32.079652 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-49" transform="translate(92.951283 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-45" transform="translate(119.651116 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-4e" transform="translate(166.774361 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-44" transform="translate(223.461808 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-4c" transform="translate(278.256343 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-9" transform="translate(303.860325 0) scale(0.916563)"/>
+     </g>
+    </g>
+    <g id="line2d_63">
+     <path d="M 498.769133 63.664729 
+L 514.769133 63.664729 
+L 530.769133 63.664729 
+" style="fill: none; stroke: #000000; stroke-width: 1.1; stroke-linecap: square"/>
+     <defs>
+      <path id="me79aed55d0" d="M -3 3 
+L 3 3 
+L 3 -3 
+L -3 -3 
+z
+" style="stroke: #000000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     </defs>
+     <g>
+      <use xlink:href="#me79aed55d0" x="514.769133" y="63.664729" style="fill-opacity: 0; stroke: #000000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     </g>
+    </g>
+    <g id="text_14">
+     <!-- RM-Hier-4p -->
+     <g transform="translate(543.569133 69.264729) scale(0.16 -0.16)">
+      <defs>
+       <path id="Utopia-Regular-32" d="M 1875 2079 
+C 2259 2079 2553 1958 2662 1524 
+C 2707 1346 2777 842 2848 549 
+C 2944 140 3187 0 3565 0 
+L 4083 0 
+L 4083 185 
+C 3584 236 3481 593 3424 1027 
+C 3347 1595 3232 2022 2553 2188 
+L 2553 2201 
+C 3155 2316 3597 2718 3597 3324 
+C 3597 3936 3212 4416 2092 4416 
+L 224 4416 
+L 224 4230 
+C 787 4192 800 4179 800 3822 
+L 800 593 
+C 800 236 787 223 224 185 
+L 224 0 
+L 2009 0 
+L 2009 185 
+C 1452 223 1433 236 1433 593 
+L 1433 2079 
+L 1875 2079 
+z
+M 1433 2304 
+L 1433 3872 
+C 1433 4140 1478 4191 1900 4191 
+C 2374 4191 2912 4019 2912 3267 
+C 2912 2597 2560 2304 1939 2304 
+L 1433 2304 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-2d" d="M 1734 0 
+L 1734 185 
+C 1318 217 1164 236 1126 504 
+C 1094 715 1081 957 1081 1295 
+L 1081 3828 
+L 1094 3828 
+L 2745 76 
+L 2918 76 
+L 4589 3828 
+L 4608 3828 
+L 4608 593 
+C 4608 236 4595 223 4032 185 
+L 4032 0 
+L 5817 0 
+L 5817 185 
+C 5261 223 5241 236 5241 593 
+L 5241 3822 
+C 5241 4179 5261 4192 5817 4230 
+L 5817 4416 
+L 4531 4416 
+C 4313 3847 4051 3286 3795 2724 
+L 3027 1014 
+L 3014 1014 
+L 2259 2718 
+C 2009 3286 1740 3847 1510 4416 
+L 211 4416 
+L 211 4230 
+C 774 4192 787 4179 787 3822 
+L 787 1295 
+C 787 957 774 715 742 504 
+C 704 236 550 211 217 185 
+L 217 0 
+L 1734 0 
+z
+" transform="scale(0.015625)"/>
+       <path id="Utopia-Regular-28" d="M 3673 2176 
+L 3673 593 
+C 3673 236 3661 223 3097 185 
+L 3097 0 
+L 4883 0 
+L 4883 185 
+C 4326 223 4307 236 4307 593 
+L 4307 3822 
+C 4307 4179 4326 4192 4883 4230 
+L 4883 4416 
+L 3097 4416 
+L 3097 4230 
+C 3661 4192 3673 4179 3673 3822 
+L 3673 2419 
+L 1433 2419 
+L 1433 3822 
+C 1433 4179 1452 4192 2009 4230 
+L 2009 4416 
+L 224 4416 
+L 224 4230 
+C 787 4192 800 4179 800 3822 
+L 800 593 
+C 800 236 787 223 224 185 
+L 224 0 
+L 2009 0 
+L 2009 185 
+C 1452 223 1433 236 1433 593 
+L 1433 2176 
+L 3673 2176 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#Utopia-Regular-32" transform="scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-2d" transform="translate(58.978826 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-d" transform="translate(145.454545 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-28" transform="translate(181.419682 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-49" transform="translate(252.851794 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-45" transform="translate(279.551626 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-52" transform="translate(326.674872 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-d" transform="translate(360.547848 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-14" transform="translate(396.512985 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-50" transform="translate(445.130656 0) scale(0.916563)"/>
+     </g>
+    </g>
+    <g id="line2d_64">
+     <path d="M 498.769133 94.725408 
+L 514.769133 94.725408 
+L 530.769133 94.725408 
+" style="fill: none; stroke: #8b0000; stroke-width: 1.1; stroke-linecap: square"/>
+     <defs>
+      <path id="mfafd55feac" d="M -3 3 
+L 3 3 
+L 3 -3 
+L -3 -3 
+z
+" style="stroke: #8b0000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     </defs>
+     <g>
+      <use xlink:href="#mfafd55feac" x="514.769133" y="94.725408" style="fill-opacity: 0; stroke: #8b0000; stroke-width: 1.1; stroke-linejoin: miter"/>
+     </g>
+    </g>
+    <g id="text_15">
+     <!-- RM-Hier-5p -->
+     <g transform="translate(543.569133 91.497094) scale(0.16 -0.16)">
+      <defs>
+       <path id="Utopia-Regular-15" d="M 2726 3801 
+L 2880 4236 
+L 2848 4288 
+L 710 4288 
+L 646 4230 
+L 518 2091 
+L 672 2014 
+C 940 2322 1203 2470 1548 2470 
+C 1958 2470 2406 2168 2406 1321 
+C 2406 660 2137 160 1580 160 
+C 1132 160 902 487 774 853 
+C 742 949 684 1007 595 1007 
+C 467 1007 256 878 256 667 
+C 256 371 704 -64 1536 -64 
+C 2592 -64 3072 577 3072 1392 
+C 3072 2290 2508 2752 1747 2752 
+C 1395 2752 1017 2598 812 2412 
+L 800 2425 
+L 947 3617 
+C 966 3776 1011 3801 1132 3801 
+L 2726 3801 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#Utopia-Regular-32" transform="scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-2d" transform="translate(58.978826 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-d" transform="translate(145.454545 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-28" transform="translate(181.419682 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-49" transform="translate(252.851794 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-45" transform="translate(279.551626 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-52" transform="translate(326.674872 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-d" transform="translate(360.547848 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-15" transform="translate(396.512985 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-50" transform="translate(445.130656 0) scale(0.916563)"/>
+     </g>
+     <!-- (Oesterle) -->
+     <g transform="translate(543.569133 105.729459) scale(0.16 -0.16)">
+      <defs>
+       <path id="Utopia-Regular-2f" d="M 2438 4319 
+C 3577 4319 3840 3160 3853 2208 
+C 3840 1255 3577 96 2438 96 
+C 1299 96 1036 1255 1024 2208 
+C 1036 3160 1299 4319 2438 4319 
+z
+M 2438 4544 
+C 1734 4544 1209 4326 851 3918 
+C 505 3529 307 2940 307 2208 
+C 307 1482 505 886 851 497 
+C 1209 89 1734 -128 2438 -128 
+C 3148 -128 3667 89 4025 497 
+C 4377 886 4569 1482 4569 2208 
+C 4569 2940 4377 3529 4025 3918 
+C 3667 4326 3148 4544 2438 4544 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#Utopia-Regular-8" transform="scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-2f" transform="translate(32.079652 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-45" transform="translate(101.320062 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-53" transform="translate(148.443307 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-54" transform="translate(188.393485 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-45" transform="translate(219.875418 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-52" transform="translate(266.998663 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-4c" transform="translate(302.664888 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-45" transform="translate(328.26887 0) scale(0.916563)"/>
+      <use xlink:href="#Utopia-Regular-9" transform="translate(375.392115 0) scale(0.916563)"/>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p0d7d95cc97">
+   <rect x="65.467373" y="7.2" width="410.688" height="377.856"/>
+  </clipPath>
+ </defs>
+</svg>

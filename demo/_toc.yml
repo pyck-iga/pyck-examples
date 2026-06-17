@@ -1,5 +1,0 @@
-format: jb-book
-root: intro
-chapters:
-  - file: 01-benchmarks/scordelis_lo_roof
-  

@@ -1,0 +1,5 @@
+format: jb-book
+root: intro
+chapters:
+  - file: shell-benchmarks/scordelis_lo_roof
+  - file: shell-benchmarks/hyperboloid_revolution
