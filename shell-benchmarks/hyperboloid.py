@@ -77,8 +77,8 @@ E = 2.0e11
 NU = 1.0 / 3.0
 P0 = 1.0e6
 
-C_NIT = 300.0                            # Nitsche stabilisation constant
 LAYER_C = 6.0                            # boundary-layer band width along the clamped edge (~ c*sqrt(t))
+C_NIT = 300.0                            # Nitsche stabilisation constant (KL element only)
 
 
 def _meridian_param_at_y(y_target: float) -> float:
@@ -124,6 +124,7 @@ def hyperboloid_octant(
         patch = patch.insert_knot(0, k / nel)
 
     if layer_width > 0.0:                                # meridian: two-region layer mesh
+        layer_width = min(layer_width, 0.5)              # cap: c*sqrt(t) exceeds the meridian for thick shells
         v_split = _meridian_param_at_y(1.0 - layer_width)
         m = nel // 2
         knots = [j * v_split / m for j in range(1, m + 1)]                 # [0, v_split]
@@ -170,33 +171,49 @@ REFERENCE = {
 #   zero bending rotation $\text{ROT}_N$.
 # - **Top edge** $y=1$ — *clamped* ($U_X=U_Y=U_Z=0,\ \text{ROT}_N=\text{ROT}_S=0$).
 #
-# Imposed weakly by the symmetric **Nitsche** method — variationally consistent, no penalty
-# parameter to tune and no Lagrange inf-sup/rank-deficiency issue. Per-field weights scale the
-# displacement traces ($\beta_u\sim E\,t\,n_{el}$) and the bending rotation
-# ($\beta_\text{rot}\sim E\,t^3 n_{el}$), with $n_{el}\sim 1/h$ the elements per side.
+# Imposed with **Lagrange multipliers** (constraints enforced exactly, no penalty weight to
+# tune). The `ROT_N` trace is the recovered bending rotation, so the same conditions apply to
+# every element. NOTE: this yields a symmetric **indefinite** saddle-point system.
 
 # %%
-def symmetry_planes(prob, patch, gauss1, t, nel) -> None:
-    """Three symmetry planes (Nitsche): zero normal displacement + zero bending rotation."""
-    w_u = C_NIT * E * t * nel
-    w_rot = C_NIT * E * t**3 * nel
+def symmetry_planes(prob, patch, gauss1, element, t, nel) -> None:
+    """Three symmetry planes: zero normal displacement + zero bending rotation. Lagrange (exact)
+    for RM; Nitsche for the rotation-free KL element (ROT_N is a derived trace, so a Lagrange
+    multiplier on it is inf-sup unstable)."""
+    is_kl = isinstance(element, ck.ShellKirchhoffLove3p)
+    w_u, w_rot = C_NIT * E * t * nel, C_NIT * E * t**3 * nel
     for boundary, normal_field in (
         (patch.boundary(0, True), ck.Field.U_Z),    # phi=0    -> z=0 plane
         (patch.boundary(0, False), ck.Field.U_X),   # phi=pi/2 -> x=0 plane
         (patch.boundary(1, True), ck.Field.U_Y),    # y=0 throat plane
     ):
-        c = ck.NitscheBoundaryCondition(boundary, gauss1)
-        c.add(normal_field, w_u).add(ck.Field.ROT_N, w_rot)
+        if is_kl:
+            c = ck.NitscheBoundaryCondition(boundary, gauss1)
+            c.add(normal_field, w_u).add(ck.Field.ROT_N, w_rot)
+        else:
+            c = ck.LagrangeBoundaryCondition(boundary, gauss1)
+            c.add(normal_field)
+            c.add(ck.Field.ROT_N)
         prob.add_condition(c, patch="hyp")
 
 
-def clamp_top_edge(prob, patch, gauss1, t, nel) -> None:
-    """Clamp the top edge y=1 (Nitsche): all displacements + bending rotations."""
-    w_u = C_NIT * E * t * nel
-    w_rot = C_NIT * E * t**3 * nel
-    c = ck.NitscheBoundaryCondition(patch.boundary(1, False), gauss1)
-    c.add(ck.Field.U_X, w_u).add(ck.Field.U_Y, w_u).add(ck.Field.U_Z, w_u)
-    c.add(ck.Field.ROT_N, w_rot).add(ck.Field.ROT_S, w_rot)
+def clamp_top_edge(prob, patch, gauss1, element, t, nel) -> None:
+    """Clamp the top edge y=1: all displacements + bending rotations. Lagrange (exact) for RM;
+    Nitsche for the rotation-free KL element (see ``symmetry_planes``)."""
+    boundary = patch.boundary(1, False)
+    if isinstance(element, ck.ShellKirchhoffLove3p):
+        w_u, w_rot = C_NIT * E * t * nel, C_NIT * E * t**3 * nel
+        c = ck.NitscheBoundaryCondition(boundary, gauss1)
+        c.add(ck.Field.U_X, w_u).add(ck.Field.U_Y, w_u).add(ck.Field.U_Z, w_u)
+        c.add(ck.Field.ROT_N, w_rot).add(ck.Field.ROT_S, w_rot)
+    else:
+        c = ck.LagrangeBoundaryCondition(boundary, gauss1)
+        c.add(ck.Field.U_X)
+        c.add(ck.Field.U_Y)
+        c.add(ck.Field.U_Z)
+        c.add(ck.Field.ROT_N)
+        c.add(ck.Field.ROT_S)
+    # c = ck.PenaltyBoundaryCondition(boundary, gauss1)   # penalty alternative (tune the weights)
     prob.add_condition(c, patch="hyp")
 
 # %% [markdown]
@@ -208,8 +225,9 @@ def solve_hyperboloid(
     element_cls: type[ck.Element] = ck.ShellReissnerMindlinHier4p,
     layer_width: float = 0.0,
 ):
-    """Solve the one-eighth clamped hyperboloid; return ``(U, ndof, t_asm, t_solve)`` — the strain
-    energy, the DOF count, and the assembly / linear-solve wall-clock times [s].
+    """Solve the one-eighth clamped hyperboloid; return ``(U, disp, ndof, t_asm, t_solve)`` — the
+    strain energy, the midsurface displacement field (a ``ck.Function``, for the L2 norm), the DOF
+    count, and the assembly / linear-solve wall-clock times [s].
 
     ``layer_width`` > 0 selects the two-region boundary-layer mesh (see ``hyperboloid_octant``).
     """
@@ -220,10 +238,10 @@ def solve_hyperboloid(
     prob.add_domain_load(pressure)
 
     gauss1 = ck.GaussLegendre(deg + 1, dim=1)
-    symmetry_planes(prob, patch, gauss1, t, nel)
-    clamp_top_edge(prob, patch, gauss1, t, nel)
+    symmetry_planes(prob, patch, gauss1, element, t, nel)
+    clamp_top_edge(prob, patch, gauss1, element, t, nel)
 
-    # Pin the hierarchic constant-psi null mode (RM-Hier elements only)
+    # Pin the hierarchic constant-psi null mode (RM-Hier-4p only)
     if isinstance(element, ck.ShellReissnerMindlinHier4p):
         prob.add_constraint(ck.DirectConstraint([3], value=0.0))
 
@@ -237,17 +255,19 @@ def solve_hyperboloid(
 
     K_energy, _ = ck.LinearElasticProblem([patch], element, gauss2).assemble()
     U = 0.5 * float(u @ (K_energy @ u))
+    disp = ck.Function(u, element, patch, ck.FieldType.DISPLACEMENT)  # midsurface displacement field
     ndof = patch.num_control_pts * element.num_node_dofs
-    return U, ndof, t_asm, t_solve
+    return U, disp, ndof, t_asm, t_solve
 
 
 # %% [markdown]
 # ## Studies
 #
-# Two studies follow:
+# Two studies follow (both with **Lagrange-multiplier** BCs):
 # - **Study 1** — normalized strain energy $U/U^{\ast}$ on the **uniform** mesh.
-# - **Study 2** — relative energy error $|U/U^{\ast}-1|$ (log-log) on the **graded** mesh,
-#   against the reduced energy rate $O(h^{2p-2})$.
+# - **Study 2** — energy convergence upon **polynomial refinement** ($p=3,4,5$): relative
+#   energy error $|U/U^{\ast}-1|$ (log-log) on the **graded** mesh, self-converged per degree;
+#   the slope steepens with $p$ (reduced rate $O(h^{2(p-1)})$).
 
 # %%
 def save_rows(rows, path):
@@ -269,11 +289,11 @@ def save_rows(rows, path):
 # approaches the reference from below (over-stiff, negative err %) and the gap widens as $t\to0$.
 
 # %%
-nel_sweep = (1, 3, 5, 7, 9, 12, 16, 20, 24, 32)
+nel_sweep = (1, 3, 5, 7, 9, 12, 16, 20, 24, 32, 64, 96)
 deg = 3
 
 uniform_rows = []
-print(f"\nStudy 1 - Uniform-mesh convergence (ShellReissnerMindlinHier5p, p={deg})")
+print(f"\nStudy 1 - Uniform-mesh convergence (ShellReissnerMindlinHier4p, p={deg})")
 
 for ratio in (100, 1000, 10000):
     t = 1.0 / ratio
@@ -283,7 +303,7 @@ for ratio in (100, 1000, 10000):
             f"{'asm[s]':>8} {'solve[s]':>9}")
     for nel in nel_sweep:
         try:
-            U, ndof, t_asm, t_solve = solve_hyperboloid(deg, nel, t, ck.ShellReissnerMindlinHier5p)
+            U, _disp, ndof, t_asm, t_solve = solve_hyperboloid(deg, nel, t, ck.ShellKirchhoffLove3p)
         except Exception as exc:             # singular on the coarsest meshes
             print(f"{nel:>5}   skipped ({type(exc).__name__})", flush=True)
             continue
@@ -301,68 +321,76 @@ save_rows(uniform_rows, os.path.join(OUT_DIR, "results_uniform.csv"))
 # <img src="hyperboloid/clamped_convergence.svg" width="560" align="center" alt="Clamped hyperboloid: normalized strain energy vs elements per side (uniform mesh), one curve per thickness.">
 
 # %% [markdown]
-# ## Study 2 — Convergence study on Graded Mesh
+# ## Study 2 — Convergence upon polynomial refinement (graded mesh)
 #
-# Same sweep, on the boundary-layer mesh (band of width $c\,\sqrt{t}$ along the clamped edge
-# $y=1$; even `nel>=2`), with the error measured against the element's **own over-refined
-# solution** ($n_{el}=128$, same element and graded mesh). This self-convergence reference removes
-# the model-gap plateau, so the **slope** of each curve is a clean per-element convergence rate
-# (the trade-off vs. the Krysl benchmark is that only the rate is meaningful now, not the absolute
-# error level).
+# For the thinnest case $1/t=10000$, on the boundary-layer mesh (band of width $c\,\sqrt{t}$ along
+# the clamped edge $y=1$; even `nel>=2`), sweep the polynomial degree $p=3,4,5$ (RM-Hier-5p,
+# Lagrange BCs). Each degree is measured against its **own over-refined solution** ($n_{el}=$
+# `NEL_REF`, same degree and graded mesh), so the slope is a clean per-degree convergence rate.
+# Two error measures are tracked: the **relative energy norm** $|U/U^{\ast}-1|$ and the
+# **relative $L^2$ displacement error** $\|u-u^{\ast}\|_{L^2}/\|u^{\ast}\|_{L^2}$.
 #
 # The membrane-dominated clamped shell is the **discriminating** test. On this doubly-curved
-# geometry the strain energy converges at the **reduced $O(h^{2(p-1)})$** rate even for the
-# shear-deformable hierarchic **`ShellReissnerMindlinHier5p`**: the membrane-dominated response
-# and the boundary layer along the clamped edge cap the energy rate below the optimal $2p$. The
-# boundary-layer grading recovers this clean $2(p-1)$ slope across all three slendernesses
-# (observed $\approx 4.0$–$4.2$ for $p=3$).
+# geometry the strain energy converges at the **reduced $O(h^{2(p-1)})$** rate (the membrane
+# response + clamped-edge boundary layer cap it below the optimal $2p$), so the slope steepens
+# with the polynomial order — $\approx 4,\,6,\,8$ for $p=3,4,5$ in the energy norm.
 
 # %%
-DEG = 3
-NEL_SWEEP_GRADED = (8, 10, 12, 14, 16, 20, 24, 32, 40, 48, 64)
-NEL_REF = 128                                     # over-refined per-element self-convergence mesh
+DEG_SWEEP = (3, 4, 5)
+NEL_SWEEP_GRADED = (4, 6, 8, 12, 16, 24, 32, 40, 48)
+NEL_REF = 96
 
 graded_rows = []
-print(f"\nStudy 2 - Graded-mesh convergence (ShellReissnerMindlinHier5p, p={DEG}); "
-      f"boundary-layer width = {LAYER_C}*sqrt(t)")
-for ratio in (100, 1000, 10000):
+print(f"\nStudy 2 - p-refinement convergence (energy + L2 displacement norms; "
+      f"ShellReissnerMindlinHier4p, Lagrange); boundary-layer width = {LAYER_C}*sqrt(t)")
+for ratio in (10000,):                          # thinnest case only
     t = 1.0 / ratio
     layer = LAYER_C * np.sqrt(t)
-    # Self-convergence reference: the same element on an over-refined (nel=NEL_REF) graded mesh,
-    # so the energy is measured against its OWN converged value -- no model-gap plateau, the slope
-    # is a clean per-element rate.
-    try:
-        U_ref, ndof_ref, _, _ = solve_hyperboloid(
-            DEG, NEL_REF, t, ck.ShellReissnerMindlinHier5p, layer_width=layer)
-    except Exception as exc:
-        print(f"  1/t={ratio}: reference solve failed ({type(exc).__name__}); skipped",
-              flush=True)
-        continue
-    print(f"\n######## 1/t = {ratio}   (U_ref = {U_ref:.6e} Nm [self, nel={NEL_REF}], "
-          f"layer width = {layer:.4g}) ########")
-    print(f"{'nel':>5} {'ndof':>8} {'energy [Nm]':>16} {'err %':>9}")
-    for nel in NEL_SWEEP_GRADED:
-        if nel < 2 or nel % 2 != 0:           # graded needs an even nel >= 2
-            continue
+    for deg in DEG_SWEEP:
+        ref_quad = ck.GaussLegendre(deg + 1, dim=2)   # integrate the L2 norm on the reference mesh
+        # Self-convergence reference: same degree on an over-refined (nel=NEL_REF) graded mesh.
         try:
-            U, ndof, t_asm, t_solve = solve_hyperboloid(
-                DEG, nel, t, ck.ShellReissnerMindlinHier5p, layer_width=layer)
-        except Exception as exc:             # singular on the coarsest meshes
-            print(f"{nel:>5}   skipped ({type(exc).__name__})", flush=True)
+            U_ref, disp_ref, ndof_ref, _, _ = solve_hyperboloid(
+                deg, NEL_REF, t, ck.ShellReissnerMindlinHier4p, layer_width=0)
+        except Exception as exc:
+            print(f"  1/t={ratio} p={deg}: reference solve failed ({type(exc).__name__}); skipped",
+                  flush=True)
             continue
-        err = 100.0 * (U - U_ref) / U_ref
-        print(f"{nel:>5} {ndof:>8} {U:>16.6e} {err:>8.3f}%", flush=True)
-        graded_rows.append({"ratio": ratio, "t": t, "deg": DEG,
-                            "element": "ShellReissnerMindlinHier5p", "layer_width": layer,
-                            "nel": nel, "ndof": ndof, "energy": U,
-                            "energy_ref": U_ref, "energy_err_pct": err})
+        disp_ref_l2 = np.sqrt(ck.inner_product(disp_ref, disp_ref, ref_quad))
+        print(f"\n######## 1/t = {ratio}, p = {deg}   (U_ref = {U_ref:.6e} Nm "
+              f"[self, nel={NEL_REF}], layer = {layer:.4g}) ########")
+        print(f"{'nel':>5} {'ndof':>8} {'energy [Nm]':>16} {'U err %':>9} {'L2 err %':>10}")
+        for nel in NEL_SWEEP_GRADED:
+            if nel < 2 or nel % 2 != 0:           # graded needs an even nel >= 2
+                continue
+            try:
+                U, disp_h, ndof, t_asm, t_solve = solve_hyperboloid(
+                    deg, nel, t, ck.ShellReissnerMindlinHier4p, layer_width=layer)
+            except Exception as exc:             # singular on the coarsest meshes
+                print(f"{nel:>5}   skipped ({type(exc).__name__})", flush=True)
+                continue
+            err = 100.0 * (U - U_ref) / U_ref
+            # Relative L2 displacement error vs the self-reference. The coarse and reference
+            # patches share the exact same geometry (refinement is geometry-preserving), so
+            # (disp_ref - disp_h) evaluated at common parametric points is the true pointwise
+            # error; integrate it on the reference mesh.
+            err_fn = disp_ref - disp_h
+            l2_rel = np.sqrt(ck.inner_product(err_fn, err_fn, ref_quad)) / disp_ref_l2
+            print(f"{nel:>5} {ndof:>8} {U:>16.6e} {err:>8.3f}% {100.0 * l2_rel:>9.3f}%", flush=True)
+            graded_rows.append({"ratio": ratio, "t": t, "deg": deg,
+                                "element": "ShellReissnerMindlinHier5p", "layer_width": layer,
+                                "nel": nel, "ndof": ndof, "energy": U,
+                                "energy_ref": U_ref, "energy_err_pct": err,
+                                "disp_l2_rel": l2_rel})
 
 save_rows(graded_rows, os.path.join(OUT_DIR, "hyperboloid_convergence_results.csv"))
 
 # %% [markdown]
-# Clamped hyperboloid (RM-Hier-5p):
+# Clamped hyperboloid ($1/t=10000$, RM-Hier-5p, polynomial refinement) — energy norm (left) and
+# $L^2$ displacement norm (right) side by side; each curve carries a small reference-slope guide
+# labelled inline as $\mathcal{O}(h^k)$ (energy: $k=4,6,8$; $L^2$: $k=4,5,6$):
 #
-# <img src="hyperboloid/clamped_rate.svg" width="560" align="center" alt="Clamped hyperboloid: relative energy error vs elements per side (graded mesh) for p=3, one curve per thickness; RM-Hier-5p follows the reduced O(h^2(p-1)) slope.">
+# <img src="hyperboloid/clamped_rate_10000.svg" width="860" align="center" alt="Clamped hyperboloid 1/t=10000: relative energy error (left) and relative L2 displacement error (right) vs elements per side (graded mesh) for p=3,4,5, with inline reference slopes.">
 
 # %% [markdown]
 # ## ParaView export
@@ -374,7 +402,7 @@ save_rows(graded_rows, os.path.join(OUT_DIR, "hyperboloid_convergence_results.cs
 # Open in ParaView, **warp by `displacement`**, colour by e.g. `psi` or `curl_psi`.
 
 # %%
-deg, nel, t = 4, 16, 1.0 / 10000
+deg, nel, t = 4, 16, 1.0 / 100
 element = ck.ShellReissnerMindlinHier4p(ck.PlaneStress2d(E, NU, t))
 layer = LAYER_C * np.sqrt(t)
 gauss1 = ck.GaussLegendre(deg + 1, dim=1)
@@ -383,8 +411,8 @@ for tag, lw in (("uniform", 0.0), ("graded", layer)):
     patch = hyperboloid_octant(deg, nel, lw)
     prob = ck.LinearElasticProblem([patch], element, ck.GaussLegendre(deg + 1, dim=2))
     prob.add_domain_load(pressure)
-    symmetry_planes(prob, patch, gauss1, t, nel)
-    clamp_top_edge(prob, patch, gauss1, t, nel)
+    symmetry_planes(prob, patch, gauss1, element, t, nel)
+    clamp_top_edge(prob, patch, gauss1, element, t, nel)
     prob.add_constraint(ck.DirectConstraint([3], value=0.0))   # pin the constant-psi null mode
     u = ck.solve(prob)
 
