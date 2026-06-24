@@ -3,4 +3,6 @@ root: intro
 chapters:
   - file: shell-benchmarks/scordelis
   - file: shell-benchmarks/hyperboloid
+  - file: shell-benchmarks/hypar
   - file: shell-benchmarks/cylindrical_strip
+  - file: shell-benchmarks/pinched_hemisphere

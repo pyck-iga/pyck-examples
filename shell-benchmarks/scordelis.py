@@ -10,7 +10,7 @@
 #       format_version: '1.3'
 #       jupytext_version: 1.11.2
 #   kernelspec:
-#     display_name: venv (3.12.3.final.0)
+#     display_name: 'defaultInterpreterPath: 3.12.3.final.0'
 #     language: python
 #     name: python3
 # ---
@@ -115,7 +115,7 @@ def scordelis_quarter_roof(
         for v in ([j * sv / m for j in range(1, m + 1)] +
                   [sv + j * (1.0 - sv) / m for j in range(1, m)]):
             patch = patch.insert_knot(1, v)
-            
+
     return patch
 
 # %% [markdown]
@@ -144,49 +144,44 @@ U_REF_POINT = np.array([[1.0, 0.0]])
 # %% [markdown]
 # ## Boundary conditions
 #
-# - **Crown plane** $x=0$ ($u=0$) — symmetry: $U_X=0,\ \text{ROT}_N=0$.
-# - **Midspan plane** $y=0$ ($v=0$) — symmetry: $U_Y=0,\ \text{ROT}_N=0$ (the
-#   $U_Y$ condition also anchors the axial rigid-body mode).
-# - **Curved end** $y=L/2$ ($v=1$) — rigid diaphragm: $U_X=U_Z=0$, axial $U_Y$ free.
-# - **Free longitudinal edge** ($u=1$) — left free; where $u_\text{ref}$ is measured.
+# - **Crown plane** ($u=1$) — symmetry: $U_X=0,\ \text{ROT}_N=0$.
+# - **Midspan plane** ($v=1$) — symmetry: $U_Y=0,\ \text{ROT}_N=0$ ($U_Y$ also anchors the axial RBM).
+# - **Curved end** ($v=0$) — rigid diaphragm: $U_X=U_Z=0$, axial $U_Y$ free.
+# - **Free longitudinal edge** ($u=0$) — left free; $u_\text{ref}$ is measured here.
 #
-# Imposed weakly by the symmetric **Nitsche** method (variationally consistent, no multipliers, so
-# the assembled system stays symmetric **positive-definite** and well-conditioned — a plain direct
-# solve, no equilibration needed). Per-field weights scale the displacement traces
-# ($\beta_u\sim E\,t\,n_{el}$) and the bending rotation ($\beta_\text{rot}\sim E\,t^3 n_{el}$), with
-# $n_{el}\sim 1/h$ the elements per side. The `ROT_N` trace is the recovered bending rotation. The
-# hierarchic constant-$\psi$ null mode of RM-Hier-4p is removed with one DirectConstraint.
+# All BCs use **symmetric Nitsche** (variationally consistent, no saddle-point system).
+# Stabilisation weights scale as $\alpha E t \cdot n_\text{el}$ (displacement) and
+# $\alpha E t^3 \cdot n_\text{el}$ (rotation), following the hyperboloid benchmark convention.
+# The hierarchic constant-$\psi$ null mode of RM-Hier-4p is removed with one DirectConstraint.
 
 # %%
-C_NIT = 300.0  # Nitsche stabilisation
+C_NIT = 10.0   # Nitsche stabilisation prefactor (dimensionless; scales with E·t·nel)
 
 
-def crown_symmetry(prob: ck.LinearElasticProblem, patch: ck.SurfacePatch,
+def crown_symmetry(prob: ck.LinearElasticProblem, patch,
                    gauss1: ck.QuadratureRule, nel: int) -> None:
     """Crown symmetry plane (Nitsche): U_X = 0, ROT_N = 0."""
-    w_u = C_NIT * E * T * nel
-    w_rot = C_NIT * E * T**3 * nel
+    w_u, w_rot = C_NIT * E * T * nel, C_NIT * E * T**3 * nel
     c = ck.NitscheBoundaryCondition(patch.boundary(0, True), gauss1)
-    c.add(ck.Field.U_X, w_u).add(ck.Field.ROT_N, w_rot)
+    _ = c.add(ck.Field.U_X, w_u).add(ck.Field.ROT_N, w_rot)
     prob.add_condition(c, patch="roof")
 
 
-def midspan_symmetry(prob: ck.LinearElasticProblem, patch: ck.SurfacePatch,
+def midspan_symmetry(prob: ck.LinearElasticProblem, patch,
                      gauss1: ck.QuadratureRule, nel: int) -> None:
     """Midspan symmetry plane (Nitsche): U_Y = 0, ROT_N = 0 (U_Y also anchors the axial RBM)."""
-    w_u = C_NIT * E * T * nel
-    w_rot = C_NIT * E * T**3 * nel
+    w_u, w_rot = C_NIT * E * T * nel, C_NIT * E * T**3 * nel
     c = ck.NitscheBoundaryCondition(patch.boundary(1, True), gauss1)
-    c.add(ck.Field.U_Y, w_u).add(ck.Field.ROT_N, w_rot)
+    _ = c.add(ck.Field.U_Y, w_u).add(ck.Field.ROT_N, w_rot)
     prob.add_condition(c, patch="roof")
 
 
-def rigid_diaphragm(prob: ck.LinearElasticProblem, patch: ck.SurfacePatch,
+def rigid_diaphragm(prob: ck.LinearElasticProblem, patch,
                     gauss1: ck.QuadratureRule, nel: int) -> None:
     """Rigid diaphragm at the curved end (Nitsche): U_X = U_Z = 0, axial U_Y free."""
     w_u = C_NIT * E * T * nel
     c = ck.NitscheBoundaryCondition(patch.boundary(1, False), gauss1)
-    c.add(ck.Field.U_X, w_u).add(ck.Field.U_Z, w_u)
+    _ = c.add(ck.Field.U_X, w_u).add(ck.Field.U_Z, w_u)
     prob.add_condition(c, patch="roof")
 
 
@@ -194,39 +189,52 @@ def rigid_diaphragm(prob: ck.LinearElasticProblem, patch: ck.SurfacePatch,
 # ## Solver
 
 # %%
-def solve_roof(prob: ck.LinearElasticProblem):
-    """Solve the quarter roof Scordelis-Lo Roof problem (Nitsche; SPD, plain direct solve)."""
+def solve_roof(prob: ck.LinearElasticProblem, pin_psi_all: bool = False):
+    """Solve the quarter roof (Nitsche BCs for all elements).
+
+    ``pin_psi_all=True`` pins ψ globally on Hier-4p, reducing it to KL/rotation-free
+    behaviour (target ≈ 0.3006).
+    """
     patch = prob.patches[0]
     bu = patch.basis[0]
     deg, nel = bu.degree, bu.num_intervals
 
-    # Self-weight body traction (force per unit mid-surface area)
     prob.add_domain_load(Q)
+    base = prob.element.base if isinstance(prob.element, ck.MixedMembraneStrainShell) else prob.element
 
-    # Weak boundary conditions (Nitsche); weights scale with nel ~ 1/h
     gauss1 = ck.GaussLegendre(deg + 1, dim=1)
     crown_symmetry(prob, patch, gauss1, nel)
     midspan_symmetry(prob, patch, gauss1, nel)
     rigid_diaphragm(prob, patch, gauss1, nel)
 
-    # RM-Hier-4p (4 DOFs/node) carries a constant-psi null mode (slot 3); pin it so the SPD
-    # system is nonsingular and solves directly (KL-3p / RM-5p have no such mode).
-    if prob.element.num_node_dofs == 4:
-        prob.add_constraint(ck.DirectConstraint([3], value=0.0))
+    if isinstance(base, ck.ShellReissnerMindlinHier4p):
+        if pin_psi_all:
+            n_cp = patch.num_control_pts
+            prob.add_constraint(ck.DirectConstraint(
+                [cp * 4 + 3 for cp in range(n_cp)], value=0.0))
+        else:
+            prob.add_constraint(ck.DirectConstraint([3], value=0.0))
+    elif isinstance(base, ck.ShellReissnerMindlinHierDisp5p):
+        edge = {int(c) for d in (0, 1) for a in (True, False)
+                for c in patch.boundary(d, a).displacement_dofs}
+        prob.add_constraint(ck.DirectConstraint(
+            [cp * 5 + 3 for cp in edge] + [cp * 5 + 4 for cp in edge], value=0.0))
 
-    # Solve linear problem (SPD, well-conditioned -> plain direct solve)
     u = ck.solve(prob)
     return u
 
 # %% [markdown]
-# ## Studies
+# ## Convergence study
 #
-# Each study sweeps the mesh, prints a convergence table, and writes the rows to a CSV
-# for postprocessing (the convergence figures are generated from these by `plot.py`).
+# The study sweeps the uniform mesh, prints a convergence table, and writes the rows to a CSV
+# for postprocessing (the convergence figure is generated from it by `plot.py`).
 
 # %%
 def save_rows(rows, path):
     """Write study result rows to `path` as CSV (columns from the first row's keys)."""
+    if not rows:
+        print(f"No rows to write to {path} (all solves skipped)")
+        return
     with open(path, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
         writer.writeheader()
@@ -234,133 +242,98 @@ def save_rows(rows, path):
     print(f"Wrote {len(rows)} rows to {path}")
 
 # %% [markdown]
-# ### Displacement vs mixed membrane strain (p=3)
+# ### Convergence under refinement
 #
-# RM-Hier-4p at $p=3$ on the **uniform** mesh, against control points per direction $N$. The pure
-# displacement element ($u$) membrane-locks at coarse meshes; the **membrane-locking-fixed** element
-# wraps the base shell in a `MixedMembraneStrainShell` ($u\tilde\varepsilon$, Hellinger-Reissner
-# assumed strain) — its membrane block is suppressed and supplied instead by the mixed strain field,
-# removing the coarse-mesh locking. The wrapper *is* the element handed to the problem; both converge
-# to the same reference.
-# %%
-n_sweep = (4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 20, 24, 32)
-# Pure displacement element vs the membrane-locking-fixed element (base wrapped in a
-# MixedMembraneStrainShell). Entry: (CSV element name, wrap in the mixed-strain shell?).
-elements = (
-    ("ShellReissnerMindlinHier4p",   False),
-    ("ShellReissnerMindlinHier4pAS", True),
-)
-print(f"\nStudy 1 - polynomial refinement (RM-Hier-4p vs assumed-strain fix, uniform, "
-      f"ref u* = {REFERENCE_RM:.4f})")
-
-rows = []
-for ename, use_as in elements:
-    for deg in (3,):
-        print(f"\n######## {ename} | p={deg} ########")
-        print(f"{'elems':>6} {'N':>4} {'ndof':>8} {'|w_A|':>12} {'err %':>9}")
-        for n in n_sweep:
-            if n - deg < 1:                  # >= 1 element/direction (min N = deg+1)
-                continue
-
-            try:
-                patch = scordelis_quarter_roof(n, deg)
-                material = ck.PlaneStress2d(E, NU, T)
-                element = ck.ShellReissnerMindlinHier4p(material)
-                gauss2 = ck.GaussLegendre(deg + 3, dim=2)
-                if use_as:   # membrane-locking fix: wrap the base shell (the wrapper IS the element,
-                    # suppressing its membrane block and re-supplying it via the mixed strain field)
-                    element = ck.MixedMembraneStrainShell(patch, element, gauss2)
-                prob = ck.LinearElasticProblem([patch], element, gauss2)
-
-                u = solve_roof(prob)
-                fn = ck.Function(u, element, patch, ck.FieldType.DISPLACEMENT)
-                disp_A = np.asarray(fn(U_REF_POINT)).reshape(3)
-                ndof = patch.num_control_pts * element.num_node_dofs
-                w = disp_A @ np.array([0.0, 0.0, 1.0])
-
-            except Exception as exc:         # rank-deficient on coarsest meshes
-                print(f"{n - deg:>6} {n:>4}   skipped ({type(exc).__name__})", flush=True)
-                continue
-
-            err = 100.0 * (abs(w) - REFERENCE_RM) / REFERENCE_RM
-            print(f"{n - deg:>6} {n:>4} {ndof:>8} {abs(w):>12.6f} {err:>8.3f}%", flush=True)
-            rows.append({"mesh": "uniform", "element": ename,
-                         "n": n, "deg": deg, "ndof": ndof, "w_signed": w, "w_abs": abs(w),
-                         "reference": REFERENCE_RM, "err_pct": err})
-
-print()
-save_rows(rows, os.path.join(OUT_DIR, "results_polynomial.csv"))
-
-# %% [markdown]
+# At the roof's single slenderness $R/t = 100$ ($t = 0.25$), refine the **uniform** mesh and compare
+# the normalized free-edge deflection $|u_\text{ref}|/u^\ast$ against DOFs for five formulations,
+# all with Lagrange multiplier BCs:
 #
-# <img src="scordelis/convergence_polynomial.svg" width="620" align="center" alt="RM-Hier-4p polynomial refinement: normalized deflection vs control points per direction.">
-
-
-# %% [markdown]
-# ### Element comparison
+# | Element | Description | Target $u^\ast$ |
+# |---------|-------------|-----------------|
+# | **RM-5p** | Standard 5p (independent rotations) | 0.3020 |
+# | **RM-Hier-5p** | Echter difference-vector 5p | 0.3020 |
+# | **RM-HierDisp-5p** | Hierarchic-displacement 5p | 0.3020 |
+# | **RM-Hier-4p** | Rotation-free hierarchic 4p | 0.3020 |
+# | **RM-Hier-4p (ψ=0)** | Hier-4p with ψ globally pinned → KL | 0.3006 |
 #
-# KL-3p, RM-Hier-4p and RM-Hier-5p at $p=3$ on the **uniform** mesh, comparing the
-# **normalized** deflection $|u_\text{ref}|/u^\ast$ per total DOF. The shear-flexible
-# RM elements approach $1$; the shear-rigid KL-3p settles about 0.5% below it.
-#
-# Free-edge deflection $\lvert u_\text{ref}\rvert$ at $p=3$ for increasing refinement
-# ($N$ = control points per direction; reference $u^\ast = 0.3020$):
-#
-# | formulation | $N=8$ | $N=16$ | $N=24$ | $N=32$ | $N=48$ |
-# |:--|--:|--:|--:|--:|--:|
-# | KL-3p (Kiendl) | 0.30045 | 0.30059 | 0.30059 | 0.30059 | 0.30059 |
-# | RM-Hier-4p | 0.30066 | 0.30108 | 0.30131 | 0.30150 | 0.30174 |
-# | RM-Hier-5p (Oesterle) | 0.30076 | 0.30131 | 0.30159 | 0.30177 | 0.30193 |
-#
-# The shear-flexible RM elements converge up toward $u^\ast = 0.3020$; KL-3p plateaus at
-# the shear-rigid Kirchhoff-Love value $0.3006$.
+# $N_\text{dof}$ counts the physical control-point DOFs only.
 
 # %%
-n_sweep = (5, 6, 7, 8, 9, 10, 12, 14, 16, 20, 24, 32, 40, 48)
-deg = 3
-elements = (
-    ("ShellReissnerMindlinHier4p", ck.ShellReissnerMindlinHier4p),
-    ("ShellReissnerMindlinHier5p", ck.ShellReissnerMindlinHier5p),
-    ("ShellKirchhoffLove3p",       ck.ShellKirchhoffLove3p),
+DEG = 3
+RATIO = int(round(R / T))   # the roof's single slenderness, R/t = 100
+
+# Per-family n sweeps chosen so that DOF counts (n² × dofs/node) approximately coincide
+# across families at each shared tier. Pairs within ~2%:
+#   3p/5p: (9,7)→~244, (18,14)→~976, (27,21)→~2196, (36,28)→~3904, (42,32)→~5120-5292
+#   4p/5p: (9,8)→~322, (18,16)→~1288, (27,24)→~2898, (36,32)→~5120-5184
+#   3p/4p: (7,6)→~144-147, (14,12)→~576-588, (21,18)→~1296-1323, (28,24)→~2304-2352, (42,36)→~5184-5292
+# Finest tier: 5p n=32 → 5120, 4p n=36 → 5184, 3p n=42 → 5292  (all within 3%, all > 5000)
+N_5P = (4, 5, 6, 7,  8, 10, 14, 16, 21, 24, 28)
+N_4P = (4, 5, 6,     8,  9, 12, 16, 18, 24, 27, 32)
+N_3P = (4, 5, 6, 7,  9, 14, 18, 21, 27, 28, 36)
+
+# Entry: (CSV label, element class, pin_psi_all, reference value, n_sweep).
+LAYER_WIDTH = (R * T) ** 0.5   # physical boundary layer width for graded meshes
+
+FORMULATIONS = (
+    ("ShellReissnerMindlin5p",              ck.ShellReissnerMindlin5p,         False, REFERENCE_RM, N_5P, 0.0),
+    ("ShellReissnerMindlin5p_graded",       ck.ShellReissnerMindlin5p,         False, REFERENCE_RM, N_5P, LAYER_WIDTH),
+    ("ShellReissnerMindlinHier5p",          ck.ShellReissnerMindlinHier5p,     False, REFERENCE_RM, N_5P, 0.0),
+    ("ShellReissnerMindlinHier5p_graded",   ck.ShellReissnerMindlinHier5p,     False, REFERENCE_RM, N_5P, LAYER_WIDTH),
+    ("ShellReissnerMindlinHierDisp5p",      ck.ShellReissnerMindlinHierDisp5p, False, REFERENCE_RM, N_5P, 0.0),
+    ("ShellReissnerMindlinHierDisp5p_graded", ck.ShellReissnerMindlinHierDisp5p, False, REFERENCE_RM, N_5P, LAYER_WIDTH),
+    ("ShellReissnerMindlinHier4p",          ck.ShellReissnerMindlinHier4p,     False, REFERENCE_RM, N_4P, 0.0),
+    ("ShellReissnerMindlinHier4p_graded",   ck.ShellReissnerMindlinHier4p,     False, REFERENCE_RM, N_4P, LAYER_WIDTH),
+    ("ShellReissnerMindlinHier4p_psi0",     ck.ShellReissnerMindlinHier4p,     True,  REFERENCE_KL, N_3P, 0.0),
+    ("ShellReissnerMindlinHier4p_psi0_graded", ck.ShellReissnerMindlinHier4p,  True,  REFERENCE_KL, N_3P, LAYER_WIDTH),
+    ("ShellKirchhoffLove3p",                ck.ShellKirchhoffLove3p,           False, REFERENCE_KL, N_3P, 0.0),
+    ("ShellKirchhoffLove3p_graded",         ck.ShellKirchhoffLove3p,           False, REFERENCE_KL, N_3P, LAYER_WIDTH),
 )
-print(f"\nStudy 2 - element comparison (p={deg}, uniform, ref u* = {REFERENCE_RM:.4f})")
+
+
+def solve_convergence(n: int, deg: int, element_cls: type[ck.Element],
+                      pin_psi: bool = False,
+                      layer_width: float = 0.0) -> tuple[float, int]:
+    """Solve the quarter roof; return ``(|w_A|, physical DOF count)``.
+
+    ``pin_psi=True`` pins ψ globally on Hier-4p (KL behaviour).
+    ``layer_width > 0`` uses a boundary-graded mesh with bands of that physical width."""
+    patch = scordelis_quarter_roof(n, deg, layer_width=layer_width)
+    element = element_cls(ck.PlaneStress2d(E, NU, T))
+    gauss2 = ck.GaussLegendre(deg + 1, dim=2)
+    prob = ck.LinearElasticProblem([patch], element, gauss2)
+    u = solve_roof(prob, pin_psi_all=pin_psi)
+    disp_A = np.asarray(
+        ck.Function(u, element, patch, ck.FieldType.DISPLACEMENT)(U_REF_POINT)).reshape(3)
+    dofs_per_node = 3 if pin_psi else element.num_node_dofs
+    ndof = patch.num_control_pts * dofs_per_node
+    return abs(disp_A[2]), ndof
+
+
+print(f"\nConvergence under refinement (R/t={RATIO}, p={DEG})")
 
 rows = []
-for ename, ecls in elements:
-    print(f"\n######## {ename} | p={deg} ########")
-    print(f"{'elems':>6} {'N':>4} {'ndof':>8} {'|w_A|':>12} {'err %':>9}")
-    for n in n_sweep:
-        if n - deg < 2:  # >= 2 elements/direction
+for ename, ecls, pin_psi, wref, n_sweep, lw in FORMULATIONS:
+    print(f"\n######## {ename} | p={DEG} | ref={wref} ########")
+    print(f"{'elems':>6} {'N':>4} {'ndof':>8} {'|w_A|':>12} {'|w|/wref':>10}")
+    for n in sorted(set(n_sweep)):
+        if n - DEG < 1:
             continue
         try:
-            patch = scordelis_quarter_roof(n, deg)
-            material = ck.PlaneStress2d(E, NU, T)
-            element = ecls(material)
-            gauss2 = ck.GaussLegendre(deg + 1, dim=2)
-            prob = ck.LinearElasticProblem([patch], element, gauss2)
-
-            u = solve_roof(prob)
-            fn = ck.Function(u, element, patch, ck.FieldType.DISPLACEMENT)
-            disp_A = np.asarray(fn(U_REF_POINT)).reshape(3)
-            ndof = patch.num_control_pts * element.num_node_dofs
-            w = disp_A @ np.array([0.0, 0.0, 1.0])
-
+            w, ndof = solve_convergence(n, DEG, ecls, pin_psi=pin_psi, layer_width=lw)
         except Exception as exc:
-            print(f"{n - deg:>6} {n:>4}   skipped ({type(exc).__name__})", flush=True)
+            print(f"{n - DEG:>6} {n:>4}   skipped ({type(exc).__name__})", flush=True)
             continue
-
-        err = 100.0 * (abs(w) - REFERENCE_RM) / REFERENCE_RM
-        print(f"{n - deg:>6} {n:>4} {ndof:>8} {abs(w):>12.6f} {err:>8.3f}%", flush=True)
-        rows.append({"mesh": "uniform", "element": ename, "n": n, "deg": deg,
-                     "ndof": ndof, "w_signed": w, "w_abs": abs(w),
-                     "reference": REFERENCE_RM, "err_pct": err})
+        print(f"{n - DEG:>6} {n:>4} {ndof:>8} {w:>12.6f} {w / wref:>10.4f}", flush=True)
+        rows.append({"element": ename, "ratio": RATIO, "n": n, "deg": DEG, "nel": n - DEG,
+                     "ndof": ndof, "w_abs": w, "w_ref": wref, "w_over_ref": w / wref})
 
 print()
-save_rows(rows, os.path.join(OUT_DIR, "results_element.csv"))
+save_rows(rows, os.path.join(OUT_DIR, "scordelis_convergence_results.csv"))
 
 # %% [markdown]
 #
-# <img src="scordelis/convergence_element.svg" width="620" align="center" alt="Element comparison (KL-3p, RM-Hier-4p, RM-Hier-5p, p=3): normalized deflection vs DOFs.">
+# <img src="scordelis/scordelis_convergence.pdf" width="620" align="center" alt="Scordelis-Lo roof convergence at R/t=100: normalized free-edge deflection |u_ref|/u* vs DOFs, five formulations with Lagrange BCs: RM-5p, RM-Hier-5p, RM-HierDisp-5p, RM-Hier-4p (target 0.3020), and RM-Hier-4p with psi globally pinned to zero (KL behaviour, target 0.3006).">
 
 # %% [markdown]
 # ## ParaView export
@@ -494,14 +467,14 @@ def export_full_roof(patch: ck.SurfacePatch, element, u_full, num_physical, path
         writer.add(patch, functions=fields)
 
 
-N, DEG = 20, 3
+N, DEG = 12, 4
 # Standard 4p, its membrane-locking-fixed mixed-strain element (MixedMembraneStrainShell over 4p),
 # and the hierarchic 5p element; non-standard ones get an "as_"/"5p_" filename prefix. Entry:
 # (prefix, base element class, wrap in the mixed-strain shell?).
 EXPORT_ELEMENTS = (
     ("",    ck.ShellReissnerMindlinHier4p, False),
     ("as_", ck.ShellReissnerMindlinHier4p, True),
-    ("5p_", ck.ShellReissnerMindlinHier5p, False),
+    ("5p_", ck.ShellReissnerMindlinHierDisp5p, False),
 )
 
 for prefix, ecls, use_as in EXPORT_ELEMENTS:

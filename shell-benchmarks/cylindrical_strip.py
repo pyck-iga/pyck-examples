@@ -172,8 +172,14 @@ def solve_strip(
     radial_load(prob, patch, gauss1, t)
     clamp_edge(prob, patch, gauss1)
     
-    if isinstance(element, ck.ShellReissnerMindlinHier4p):  # pin the psi zero-energy mode
+    if isinstance(base, ck.ShellReissnerMindlinHier4p):  # pin the psi zero-energy mode
         prob.add_constraint(ck.DirectConstraint([3], value=0.0))
+    
+    elif isinstance(base, ck.ShellReissnerMindlinHier5p):  # anchor the constant-v_s shear kernel
+        edge = {int(c) for d in (0, 1) for a in (True, False)
+                for c in patch.boundary(d, a).displacement_dofs}
+        prob.add_constraint(ck.DirectConstraint(
+            [cp * 5 + 3 for cp in edge] + [cp * 5 + 4 for cp in edge], value=0.0))
 
     u_full = ck.solve(prob, full=True)
     u = u_full[:prob.num_physical_dofs]
@@ -237,7 +243,7 @@ for elem_name, elem_cls, use_mms in FORMULATIONS:
 save_rows(slender_rows, os.path.join(OUT_DIR, "results_slenderness.csv"))
 
 # %% [markdown]
-# <img src="cylindrical_strip/strip_locking.svg" width="560" align="center" alt="Clamped cylindrical strip: radial tip deflection |w| vs slenderness R/t at a fixed coarse mesh for six formulations (RM-Hier-4p, RM-Hier-5p, RM-5p, each plain and MMS); the hierarchic MMS variants track the analytical reference, the plain hierarchic elements membrane-lock, and the standard RM-5p shear-locks even with MMS.">
+# <img src="cylindrical_strip/strip_locking.pdf" width="560" align="center" alt="Clamped cylindrical strip: radial tip deflection |w| vs slenderness R/t at a fixed coarse mesh for six formulations (RM-Hier-4p, RM-Hier-5p, RM-5p, each plain and MMS); the hierarchic MMS variants track the analytical reference, the plain hierarchic elements membrane-lock, and the standard RM-5p shear-locks even with MMS.">
 
 # %% [markdown]
 # ## Study 2 — Convergence under refinement
@@ -278,7 +284,7 @@ for ratio in CONV_RATIOS:
 save_rows(conv_rows, os.path.join(OUT_DIR, "results_convergence.csv"))
 
 # %% [markdown]
-# <img src="cylindrical_strip/strip_convergence.svg" width="760" align="center" alt="Clamped cylindrical strip: normalized tip deflection |w|/w_ref vs number of DOFs under mesh refinement, two subplots for R/t=100 and R/t=10000, six formulations; RM-Hier-4p reaches accuracy at fewer DOFs than RM-Hier-5p, the standard RM-5p is slowest (shear locking), and the MMS variants converge fastest; the thin shell needs many more DOFs.">
+# <img src="cylindrical_strip/strip_convergence.pdf" width="760" align="center" alt="Clamped cylindrical strip: normalized tip deflection |w|/w_ref vs number of DOFs under mesh refinement, two subplots for R/t=100 and R/t=10000, six formulations; RM-Hier-4p reaches accuracy at fewer DOFs than RM-Hier-5p, the standard RM-5p is slowest (shear locking), and the MMS variants converge fastest; the thin shell needs many more DOFs.">
 
 # %% [markdown]
 # ## ParaView export
@@ -311,7 +317,7 @@ def export_strip(t: float, assumed_strain: bool, path: str) -> None:
     prob = ck.LinearElasticProblem([patch], element, gauss2)
     radial_load(prob, patch, gauss1, t)
     clamp_edge(prob, patch, gauss1)
-    if isinstance(element, ck.ShellReissnerMindlinHier4p):        # pin its constant-psi null mode (slot 3)
+    if isinstance(base, ck.ShellReissnerMindlinHier4p):           # pin its constant-psi null mode (slot 3)
         prob.add_constraint(ck.DirectConstraint([3], value=0.0))
     u_full = ck.solve(prob, full=True)
     u = u_full[:prob.num_physical_dofs]

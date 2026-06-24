@@ -84,17 +84,24 @@ NU = 0.3
 RHO = 8000.0                             # self-weight force density [N/m^3]; per-area load = RHO*t
 
 C_NIT = 300.0                            # Nitsche stabilisation constant
+LAYER_C = 1.0                            # band width along the clamped edge = LAYER_C*sqrt(L*t)
 
 
-def hypar_patch(deg: int, nel: int) -> ck.SurfacePatch:
+def hypar_patch(deg: int, nel: int, layer_width: float = 0.0,
+                nel_v: int | None = None) -> ck.SurfacePatch:
     """Exact bi-quadratic Bézier saddle ``Z = X^2 - Y^2`` on the half domain
     ``X in [-L/2,L/2], Y in [0,L/2]`` (u = X, v = Y; v=0 is the symmetry plane Y=0),
-    degree-elevated to ``deg`` and knot-refined to a uniform ``nel x nel`` mesh.
+    degree-elevated to ``deg`` and knot-refined to ``nel`` (u) x ``nel_v`` (v) elements.
 
-    A uniform mesh is used throughout: this partly-clamped saddle is bending/twist-dominated
-    with a *global* response, so a boundary-layer mesh graded toward the clamped edge actually
-    *hurts* — it starves the interior twist field and worsens the thin-shell results.
+    ``nel_v`` defaults to ``nel``. Because ``v`` spans only the half domain ``[0,L/2]`` while ``u``
+    spans the full width ``[-L/2,L/2]``, geometrically **square** cells need ``nel_v = nel//2``.
+
+    With ``layer_width > 0`` the u-direction (across the clamped edge ``u=0``, X=-L/2) is a
+    **two-region boundary-layer mesh**: ``nel//2`` uniform elements in the band ``X in [-L/2,
+    -L/2+layer_width]`` and ``nel//2`` over the rest, resolving the clamped-edge layer. The
+    v-direction stays uniform. ``layer_width=0`` is the plain uniform mesh.
     """
+    nel_v = nel if nel_v is None else nel_v
     h = L / 2.0
     xs = np.array([-h, 0.0, h])
     cx = np.array([h * h, -h * h, h * h])                # x^2 deg-2 Bézier z-ordinates on [-L/2,L/2]
@@ -105,9 +112,21 @@ def hypar_patch(deg: int, nel: int) -> ck.SurfacePatch:
     b = ck.BSpline.clamped_uniform(2, 3)                 # polynomial (saddle is exact, weights=1)
     patch = ck.SurfacePatch(b, b, cps, name="hypar")
     patch = patch.elevate_degree(0, deg - 2).elevate_degree(1, deg - 2)
-    for k in range(1, nel):
-        patch = patch.insert_knot(0, k / nel)
-        patch = patch.insert_knot(1, k / nel)
+
+    if layer_width > 0.0:                                # u: two-region layer mesh toward the clamp
+        f = min(layer_width, 0.5 * L) / L                # parametric band width near u=0 (X linear in u)
+        m = nel // 2
+        knots = [j * f / m for j in range(1, m + 1)]                 # [0, f]   clamped-edge band
+        knots += [f + j * (1.0 - f) / m for j in range(1, m)]        # (f, 1]   interior
+        for u in knots:
+            patch = patch.insert_knot(0, u)
+        for k in range(1, nel_v):                         # v uniform
+            patch = patch.insert_knot(1, k / nel_v)
+    else:                                                # uniform: nel in u, nel_v in v
+        for k in range(1, nel):
+            patch = patch.insert_knot(0, k / nel)
+        for k in range(1, nel_v):
+            patch = patch.insert_knot(1, k / nel_v)
     return patch
 
 
@@ -181,13 +200,14 @@ def symmetry_plane(prob, patch, gauss1, t, nel) -> None:
 # %%
 def solve_hypar(deg: int, nel: int, t: float,
                 element_cls: type[ck.Element] = ck.ShellReissnerMindlinHier4p,
-                assumed_strain: bool = False):
+                assumed_strain: bool = False, layer_width: float = 0.0):
     """Solve the partly-clamped hyperbolic paraboloid; return ``(U, w_abs, ndof, t_asm, t_solve)``
     — the whole-structure strain energy, the tip deflection magnitude, the DOF count, and the
     assembly / linear-solve wall-clock times [s]. ``element_cls`` selects the base shell;
     ``assumed_strain=True`` wraps it in a ``MixedMembraneStrainShell`` (membrane-locking fix; the
-    wrapper IS the element, its membrane block suppressed and supplied by the mixed strain field)."""
-    patch = hypar_patch(deg, nel)
+    wrapper IS the element, its membrane block suppressed and supplied by the mixed strain field).
+    ``layer_width > 0`` selects the clamped-edge boundary-layer mesh (see ``hypar_patch``)."""
+    patch = hypar_patch(deg, nel, layer_width)
     base = element_cls(ck.PlaneStress2d(E, NU, t))
     gauss2 = ck.GaussLegendre(deg + 1, dim=2)
     element = ck.MixedMembraneStrainShell(patch, base, gauss2) if assumed_strain else base
@@ -228,8 +248,8 @@ def solve_hypar(deg: int, nel: int, t: float,
 # Two studies follow:
 # - **Study 1** — consistency: strain energy $U/U^{\ast}$ and tip deflection $|w|/|w^{\ast}|$ vs
 #   the references on the **uniform** mesh.
-# - **Study 2** — convergence: relative energy error $|U/U^{\ast}-1|$ (log-log) on the
-#   boundary-layer **graded** mesh, against the reduced energy rate $O(h^{2(p-1)})$.
+# - **Study 2** — convergence: relative energy error $|U/U^{\ast}-1|$ (log-log) on the **uniform**
+#   mesh, $p=3,4,5$, plain vs mixed RM-Hier-4p, two slendernesses, against $O(h^{2(p-1)})$.
 
 # %%
 def save_rows(rows, path):
@@ -243,26 +263,25 @@ def save_rows(rows, path):
 # %% [markdown]
 # ## Study 1 — Consistency study on Uniform mesh
 #
-# Per thickness, sweep elements per side on a **uniform** mesh ($p=3$), starting from the coarsest
-# single-element mesh (`nel=1`, $N=\deg+1$). The study is run on the standard hierarchic
-# **RM-Hier-4p** and **RM-Hier-5p** and their membrane-locking-fixed **-AS** variants (the base
-# shell wrapped in a `MixedMembraneStrainShell`), all plotted together so any difference is directly
-# visible. Both targets — strain energy and tip deflection — approach the reference from below
-# (over-stiff, negative err %). The partly-clamped saddle is **bending/twist-dominated**, so on a
-# uniform mesh it suffers membrane locking that grows sharply as the shell thins: $t/L=1/100$
-# converges well, while $t/L=1/10000$ stays far from the reference until much finer meshes. The
-# assumed-strain fix sits markedly closer to the reference than the corresponding plain element,
-# most visibly for the thin shells.
+# Per thickness, sweep elements per direction on a **uniform** mesh ($p=3$), starting from the
+# coarsest single-element mesh (`nel=1`). Two side-by-side panels show the two normalized targets
+# approaching their references (converged value $\to 1$): the **tip deflection** $|w^h|/|w^{\ast}|$
+# and the **strain energy** $U^h/U^{\ast}$, for the rotation-free **RM-Hier-4p** and its
+# membrane-locking-fixed mixed variant **RM-Hier-4p-MMS** (base wrapped in a
+# `MixedMembraneStrainShell`), at the three slendernesses $t/L=1/100,\,1/1000,\,1/10000$.
+#
+# Both targets approach from below (over-stiff). The partly-clamped saddle is **bending/twist-
+# dominated**, so on a uniform mesh it suffers membrane locking that grows sharply as the shell
+# thins: $t/L=1/100$ converges well, $1/10000$ stays far from the reference until much finer meshes.
+# The mixed (MMS) element sits markedly closer to the reference, most visibly for the thin shells.
 
 # %%
 nel_sweep = (1, 2, 4, 6, 8, 12, 16, 20, 24, 32)
-# (CSV name, base class, assumed-strain fix?, degree). Standard hierarchic 4p/5p vs their
-# membrane-locking-fixed assumed-strain variants, all at p=3.
+# (CSV name, base class, assumed-strain (MMS) fix?, degree). Rotation-free RM-Hier-4p, plain vs its
+# membrane-locking-fixed mixed variant, at p=3.
 ELEMENTS = (
     ("ShellReissnerMindlinHier4p",   ck.ShellReissnerMindlinHier4p, False, 3),
     ("ShellReissnerMindlinHier4pAS", ck.ShellReissnerMindlinHier4p, True,  3),
-    ("ShellReissnerMindlinHier5p",   ck.ShellReissnerMindlinHier5p, False, 3),
-    ("ShellReissnerMindlinHier5pAS", ck.ShellReissnerMindlinHier5p, True,  3),
 )
 print("\nStudy 1 - Uniform-mesh consistency")
 
@@ -291,60 +310,69 @@ for elem_name, elem_cls, use_as, deg in ELEMENTS:
 save_rows(uniform_rows, os.path.join(OUT_DIR, "results_uniform.csv"))
 
 # %% [markdown]
-# <img src="hypar/hypar_consistency.svg" width="560" align="center" alt="Partly-clamped hyperbolic paraboloid: normalized strain energy U/U^ref vs elements per side (uniform mesh), one curve per thickness and line style per element (RM-Hier-4p/5p and their assumed-strain AS variants); locking deepens as the shell thins.">
-#
-# <img src="hypar/hypar_consistency_w.svg" width="560" align="center" alt="Partly-clamped hyperbolic paraboloid: normalized tip deflection |w|/|w^ref| vs elements per side (uniform mesh), one curve per thickness and line style per element; tracks the strain-energy convergence closely.">
+# <img src="hypar/hypar_consistency.pdf" width="860" align="center" alt="Partly-clamped hyperbolic paraboloid consistency on a uniform mesh: normalized tip deflection |w^h|/|w^ref| (left) and strain energy U^h/U^ref (right) vs elements per direction, three slendernesses (colour) for RM-Hier-4p and RM-Hier-4p-MMS (line style); membrane locking deepens as the shell thins, the mixed element sits closer to the reference.">
 
 # %% [markdown]
-# ## Study 2 — Convergence study (rate)
+# ## Study 2 — Convergence: uniform vs boundary-layer-graded mesh
 #
-# Same **uniform** mesh, with the energy error measured against the element's **own over-refined
-# solution** ($n_{el}=128$). This self-convergence reference removes the model-gap offset, so the
-# **slope** of each curve is a clean per-thickness convergence rate ($n_{el}\sim 1/h$).
+# Energy-error convergence $|U/U^{\ast}-1|$ at degree $p=3$ for the **three slendernesses**
+# $t/L=1/100,\,1/1000,\,1/10000$ and both formulations (plain rotation-free **RM-Hier-4p** and its
+# mixed assumed-strain variant), measured against the **published Bathe-Iosilevich-Chapelle
+# reference** $U^{\ast}$ (Table 2, MITC16). Two panels contrast the mesh:
 #
-# On this partly-clamped saddle the strain energy converges at the **reduced $O(h^{2(p-1)})$**
-# rate: clamping one edge restricts the inextensional (pure-bending) space and adds a boundary
-# layer, capping the rate below the optimal $2p$. A boundary-layer mesh graded toward the clamp is
-# **not** used — the response here is bending/twist-dominated and *global*, so grading starves the
-# interior and worsens the thin-shell results; the uniform mesh is both simpler and more accurate.
-# The thinner the shell, the more elements membrane locking demands before the asymptotic rate sets
-# in, so the thin curves enter the $2(p-1)$ slope only on the finer meshes.
+# - **Uniform mesh** (left) — expected to **fail**: the clamped-edge boundary layer ($\sim\sqrt{Lt}$)
+#   is unresolved, so the curves stall well below the optimal slope, worsening as the shell thins.
+# - **Graded mesh** (right) — a band of width $\ell=\sqrt{L\,t}$ across the clamped edge: the layer
+#   is resolved, so the energy recovers the **optimal $O(h^{2(p-1)})=O(h^4)$** rate (the $m=2$
+#   signature). A crossover dip can appear at the finest meshes where the computed energy passes
+#   through the slightly ($\sim$0.16%) under-converged MITC16 value.
 
 # %%
-DEG = 3
-NEL_SWEEP = (4, 6, 8, 12, 16, 24, 32, 48, 64)
-NEL_REF = 128                                     # over-refined per-thickness self-convergence mesh
+DEG = 3                                            # p=3 only (the m=2 reference degree, rate 4)
+NEL_SWEEP = (4, 6, 8, 12, 16, 24, 32)
+RATE_RATIOS = (100, 1000, 10000)                   # three slendernesses, one colour each
+
+# Two formulations: plain RM-Hier-4p and its mixed (assumed-membrane-strain) variant. Entry is
+# (CSV/legend name, base element class, wrap in MixedMembraneStrainShell?).
+RATE_FORMULATIONS = (
+    ("ShellReissnerMindlinHier4p",   ck.ShellReissnerMindlinHier4p, False),
+    ("ShellReissnerMindlinHier4pAS", ck.ShellReissnerMindlinHier4p, True),
+)
+
+# Published reference energies U* [Nm]: Bathe-Iosilevich-Chapelle Table 2 (MITC16, 48x24). The
+# external reference removes the self-reference floor; the MITC16 value is ~0.16% under-converged
+# at 1/100, so a curve can cross through it at the finest meshes.
+U_BATHE = {100: 1.6790e-3, 1000: 1.1013e-2, 10000: 8.9867e-2}
 
 rate_rows = []
-print(f"\nStudy 2 - Uniform-mesh convergence rate (ShellReissnerMindlinHier4p, p={DEG})")
-for ratio in (100, 1000, 10000):
-    t = 1.0 / ratio
-    # Self-convergence reference: the same element on an over-refined (nel=NEL_REF) uniform mesh,
-    # so the energy is measured against its OWN converged value -- the slope is a clean rate.
-    try:
-        U_ref, _, ndof_ref, _, _ = solve_hypar(DEG, NEL_REF, t)
-    except Exception as exc:
-        print(f"  t/L=1/{ratio}: reference solve failed ({type(exc).__name__}); skipped", flush=True)
-        continue
-    print(f"\n######## t/L = 1/{ratio}   (U_ref = {U_ref:.6e} Nm [self, nel={NEL_REF}]) ########")
-    print(f"{'nel':>5} {'ndof':>8} {'energy [Nm]':>16} {'err %':>9}")
-    for nel in NEL_SWEEP:
-        try:
-            U, w, ndof, _, _ = solve_hypar(DEG, nel, t)
-        except Exception as exc:             # singular on the coarsest meshes
-            print(f"{nel:>5}   skipped ({type(exc).__name__})", flush=True)
-            continue
-        err = 100.0 * (U - U_ref) / U_ref
-        print(f"{nel:>5} {ndof:>8} {U:>16.6e} {err:>8.3f}%", flush=True)
-        rate_rows.append({"ratio": ratio, "t": t, "deg": DEG,
-                          "element": "ShellReissnerMindlinHier4p",
-                          "nel": nel, "ndof": ndof, "energy": U,
-                          "energy_ref": U_ref, "energy_err_pct": err})
+print("\nStudy 2 - convergence vs published Bathe reference (uniform vs graded mesh; "
+      "plain + mixed RM-Hier-4p, p=3)")
+for mesh in ("uniform", "graded"):
+    for ratio in RATE_RATIOS:
+        t = 1.0 / ratio
+        layer = 0.0 if mesh == "uniform" else np.sqrt(L * t)   # graded band ~ sqrt(L t)
+        U_ref = U_BATHE[ratio]
+        for ename, ecls, use_mms in RATE_FORMULATIONS:
+            print(f"\n######## [{mesh}] {ename} | t/L = 1/{ratio}   (U_ref = {U_ref:.6e} Nm "
+                  f"[Bathe], layer = {layer:.4g}) ########")
+            print(f"{'nel':>5} {'ndof':>8} {'energy [Nm]':>16} {'err %':>9}")
+            for nel in NEL_SWEEP:
+                try:
+                    U, w, ndof, _, _ = solve_hypar(DEG, nel, t, ecls, assumed_strain=use_mms,
+                                                   layer_width=layer)
+                except Exception as exc:             # singular on the coarsest meshes
+                    print(f"{nel:>5}   skipped ({type(exc).__name__})", flush=True)
+                    continue
+                err = 100.0 * (U - U_ref) / U_ref
+                print(f"{nel:>5} {ndof:>8} {U:>16.6e} {err:>8.3f}%", flush=True)
+                rate_rows.append({"mesh": mesh, "ratio": ratio, "t": t, "deg": DEG,
+                                  "element": ename, "nel": nel, "ndof": ndof, "energy": U,
+                                  "energy_ref": U_ref, "energy_err_pct": err})
 
 save_rows(rate_rows, os.path.join(OUT_DIR, "hypar_convergence_results.csv"))
 
 # %% [markdown]
-# <img src="hypar/hypar_rate.svg" width="560" align="center" alt="Partly-clamped hyperbolic paraboloid: relative energy error vs elements per side (uniform mesh) for p=3, one curve per thickness; the energy converges at the reduced O(h^2(p-1)) slope, with thinner shells reaching it on finer meshes.">
+# <img src="hypar/hypar_rate.pdf" width="860" align="center" alt="Partly-clamped hyperbolic paraboloid energy convergence vs the Bathe reference at p=3: relative energy error vs elements per side on a uniform mesh (left, fails to reach the rate) and a boundary-layer graded mesh (right, recovers O(h^4)), three slendernesses t/L=1/100,1/1000,1/10000, plain vs mixed RM-Hier-4p, with the O(h^4) slope guide.">
 
 # %% [markdown]
 # ## ParaView export
@@ -363,7 +391,7 @@ save_rows(rate_rows, os.path.join(OUT_DIR, "hypar_convergence_results.csv"))
 # oscillation-free, whereas a plain displacement `TRACTION` would lock.
 
 # %%
-deg, nel = 4, 24
+deg, nel = 4, 8                          # 8 along X (full width); v (Y half domain) -> nel//2 for square cells
 gauss1 = ck.GaussLegendre(deg + 1, dim=1)
 
 
@@ -372,7 +400,7 @@ def export_hypar(t: float, assumed_strain: bool, path: str) -> None:
     ``MixedMembraneStrainShell`` (membrane-locking fix); its membrane forces n^{ab} come from the
     wrapper's ``TRACTION`` on the **full** solution (the assumed-strain field — a plain TRACTION on
     the displacement would lock). All other fields come from the displacement as usual."""
-    patch = hypar_patch(deg, nel)
+    patch = hypar_patch(deg, nel, nel_v=nel // 2)        # square cells: half elements in the v (Y) half-domain
     base = ck.ShellReissnerMindlinHier4p(ck.PlaneStress2d(E, NU, t))
     gauss2 = ck.GaussLegendre(deg + 1, dim=2)
     element = ck.MixedMembraneStrainShell(patch, base, gauss2) if assumed_strain else base
